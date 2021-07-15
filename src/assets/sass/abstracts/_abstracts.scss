@@ -1,0 +1,17 @@
+:root {
+    --color-primario    :    hsl(18, 100%, 60%);
+    --color-secundario  :    hsl(249, 77%, 55%);
+    --text-color        :    hsl(0, 0%, 100%);
+    --border-color      :    hsl(0, 0%, 21%);
+    --bg-color-claro    :    hsl(0, 0%, 16%);
+    --bg-color-medio   :     hsl(0, 0%, 14%);
+    --bg-color-oscuro   :    hsl(0, 0%, 10%);
+}
+
+body.tema-claro {
+    --text-color        :    hsl(0, 0%, 9%);
+    --border-color      :    hsl(0, 0%, 80%);
+    --bg-color-claro    :    hsl(0, 0%, 100%);
+    --bg-color-medio   :     hsl(0, 0%, 86%);
+    --bg-color-oscuro   :    hsl(0, 0%, 90%);
+}
