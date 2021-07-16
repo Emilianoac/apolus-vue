@@ -1,4 +1,5 @@
 <template>
+    <h2 class="titulo-categoria titulo-categoria_lista-canciones" v-if="seccion == 'busqueda'"> {{ titulo }} </h2>
     <div class="lista-canciones mt-4">
         <ul class="lista-canciones__contenido"> 
             <li class="lista-header">
@@ -15,15 +16,17 @@
             </li>       
         </ul>
     </div>
+    <hr v-if="seccion == 'busqueda'" class="separador">
 </template>
 
 <script>
-    import BotonFavorito from './botones/BotonFavorito.vue'
+    import BotonFavorito from "./botones/BotonFavorito.vue"
     export default { 
-        name: 'ListaCanciones',
+        name: "ListaCanciones",
         components: {
             BotonFavorito
-        }
+        },
+        props: ["seccion", "titulo"]
     }
 </script>
 
@@ -76,6 +79,16 @@
                 }
             }
         }
+    }
+    
+    .titulo-categoria.titulo-categoria_lista-canciones {
+        margin-top: 2em;
+    }
+
+    .separador {
+        border-bottom: 1px solid var(--border-color);
+        opacity: 1;
+        margin : 2em 0;
     }
 
     @media(min-width:1600px) {
