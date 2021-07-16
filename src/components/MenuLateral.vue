@@ -2,50 +2,49 @@
     <aside class="menu-lateral">
         <ul class="menu-lateral__container">
             <li class="menu-lateral__item">
-                    <a 
+                    <router-link
                         class="menu-lateral__link active" 
-                        data-link-menu="" 
+                        to="/"
                         data-bs-toggle="tooltip" 
                         data-bs-placement="right" 
                         title="Inicio">
                         <fa icon="home" />
-                    </a>   
+                    </router-link>   
             </li>
             <li class="menu-lateral__item">
-                    <a 
-                        class="menu-lateral__link" 
-                        data-link-menu="" 
+                    <router-link 
+                        class="menu-lateral__link"
+                        to="/buscar"  
                         data-bs-toggle="tooltip" 
                         data-bs-placement="right" 
                         title="Buscar">
                         <fa icon="search" />
-                    </a>
+                    </router-link>
             </li>
             <li class="menu-lateral__item">
-                    <a 
+                    <router-link
                         class="menu-lateral__link" 
-                        data-link-menu="" 
+                        to="/favoritos"
                         data-bs-toggle="tooltip" 
                         data-bs-placement="right" 
                         title="Favoritas">
                         <fa icon="heart" />
-                    </a>
+                    </router-link>
             </li>
             <li class="menu-lateral__item">
-                    <a 
-                        class="menu-lateral__link" 
-                        data-link-menu="" 
+                    <router-link 
+                        class="menu-lateral__link"
+                        to="/mis-listas-de-reproduccion" 
                         data-bs-toggle="tooltip" 
                         data-bs-placement="right" 
-                        title="Listas de reproducción">
+                        title=" Mis Listas de reproducción">
                         <fa icon="music" />
-                    </a>          
+                    </router-link>          
             </li>
             <li class="menu-lateral__item">
                 <hr class="mx-3"/>
                 <button 
                     class="menu-lateral__link" 
-                    data-link-menu="" 
                     data-bs-toggle="tooltip" 
                     data-bs-placement="right" 
                     title="Ajustes">
@@ -74,14 +73,14 @@
         grid-column: 1/2;
         height: 100%;
         width: 70px;
-        padding-top: 3.5rem;
+        padding-top: 3.5em;
         box-shadow: 0px 7px 9px rgba(0, 0, 0, 0.274);
         background-color: var(--bg-color-oscuro);
 
         .menu-lateral__container {
             list-style-type: none;
             padding-left: 0;
-            margin-top: 3rem;
+            margin-top: 3em;
             text-align: center;
 
             .menu-lateral__item {
@@ -89,7 +88,7 @@
             }
 
             .menu-lateral__link {
-                font-size: 1.3em;
+                font-size: 1.2em;
                 border: 0;
                 padding: 0;
                 color: var(--text-color);
