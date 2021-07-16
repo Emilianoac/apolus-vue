@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import Home from '../views/Home.vue'
 import Perfil from '../views/Perfil.vue'
+import Buscar from '../views/Buscar.vue'
 
 const routes = [
   {
@@ -12,6 +13,11 @@ const routes = [
     path: '/perfil',
     name: 'Perfil',
     component: Perfil
+  },
+  {
+    path: '/buscar',
+    name: 'Buscar',
+    component: Buscar
   }
 ]
 
