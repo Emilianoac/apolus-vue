@@ -5,3 +5,19 @@ body {
     background-color: var(--bg-color-claro);
     overflow-x: hidden;
 }
+
+.titulo-principal,
+.titulo-categoria {
+    font-weight: 700;
+    line-height: 0.8;
+    padding-left: 10px;
+    border-left: 6px solid #ff7033;
+}
+
+.titulo-principal { 
+    font-size: 2.1em;
+}
+
+.titulo-categoria { 
+    font-size: 1.2em;
+}
