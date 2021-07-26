@@ -1,14 +1,14 @@
 <template>
     <article class="card">
-        <router-link class="card__link" to="/perfil">
+        <router-link class="card__link" :to="slug">
             <div class="card__row">
                 <img class="card__img" 
-                     src="../../public/img/album-cover/at-swim.webp"
+                     :src="miniatura"
                      alt=""
                      load="lazy"
                 />
             </div>
-            <p class="card__titulo">Hola</p>
+            <p class="card__titulo">{{nombre}}</p>
         </router-link>
         <BotonPlay/>
     </article>
@@ -21,7 +21,8 @@
         name: "Card",
         components: {
             BotonPlay
-        }
+        },
+        props: ["nombre", "miniatura", "slug"]
     }
 </script>
 

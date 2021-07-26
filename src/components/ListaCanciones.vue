@@ -1,5 +1,5 @@
 <template>
-    <h2 class="titulo-categoria titulo-categoria_lista-canciones" v-if="seccion == 'busqueda'"> {{ titulo }} </h2>
+    <h2 class="titulo-categoria titulo-categoria_lista-canciones" v-show="seccion == 'busqueda'"> {{ titulo }} </h2>
     <div class="lista-canciones mt-4">
         <ul class="lista-canciones__contenido"> 
             <li class="lista-header">
@@ -8,15 +8,15 @@
                 <div class="lista-header__duracion">Duración</div>
                 <div class="lista-header__favorito"></div>
             </li>
-            <li class="cancion" v-for="cancion in 8" :key="cancion">
-                <div class="cancion__titulo"> I dont know </div>
-                <div class="cancion__artista"> Lisa hanningan </div>   
-                <div class="cancion__duracion"> 3:30 </div>
+            <li class="cancion" v-for="cancion in album " :key="cancion">
+                <div class="cancion__titulo"> {{cancion.nombre_cancion}} </div>
+                <div class="cancion__artista"> {{cancion.interprete_cancion}} </div>   
+                <div class="cancion__duracion"> {{cancion.duracion_cancion}} </div>
                 <BotonFavorito/>
-            </li>       
+            </li> 
         </ul>
     </div>
-    <hr v-if="seccion == 'busqueda'" class="separador">
+    <hr v-show="seccion == 'busqueda'" class="separador">
 </template>
 
 <script>
@@ -26,7 +26,7 @@
         components: {
             BotonFavorito
         },
-        props: ["seccion", "titulo"]
+        props: ["seccion", "titulo", "album"]
     }
 </script>
 

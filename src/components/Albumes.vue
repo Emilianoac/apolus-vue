@@ -1,13 +1,19 @@
 <template>
     <section class="albumes">
-        <figure class="album mb-4 mb-lg-0" v-for="album in 4" :key="album">
+        <figure class="album mb-4 mb-lg-0" v-for="album in albumes" :key="album">
             <div class="img-container">
-                <img class="album__miniatura" 
-                     src="../../public/img/album-cover/at-swim.webp" 
+                <img 
+                     class="album__miniatura" 
+                     :src="album.cover_album" 
                 />
             </div>
             <figcaption class="album__nombre"> 
-                At-swim <time class="album__fecha" datetime="2019-06-28">(2019)</time>
+                {{album.nombre_album}} 
+                <time 
+                    class="album__fecha" 
+                    datetime="2019-06-28">
+                    ({{album.fecha_lanzamiento}})
+                </time>
             </figcaption>
         </figure>
     </section> 
@@ -15,7 +21,8 @@
 
 <script>
     export default {
-        name: "Albumes"
+        name: "Albumes",
+        props: ["albumes"]
     }
 </script>
 
@@ -75,6 +82,14 @@
             &:hover .album__nombre {
                 opacity: 0.6;
             }
+        }
+    }
+
+    @media (max-width: 575px) {
+
+        .albumes {
+            overflow-x: scroll;
+            grid-template-columns: repeat(4, 90px);
         }
     }
 </style>

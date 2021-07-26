@@ -10,9 +10,10 @@ const routes = [
     component: Home
   },
   {
-    path: '/perfil',
+    path: '/:slug',
     name: 'Perfil',
-    component: Perfil
+    component: Perfil,
+    props: true
   },
   {
     path: '/buscar',

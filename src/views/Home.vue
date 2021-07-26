@@ -1,23 +1,37 @@
 <template>
     <Layout>
-        <Categoria v-for="categoria in categorias" :key="categoria" :titulo="categoria" />
+        <div v-if="artistas.length">
+            <Categoria
+                titulo="Escuchados Recientementes"
+                :artistas="artistas" 
+            />
+        </div>
+        <div v-else>
+            <Loader/>
+        </div>
     </Layout>
 </template>
 
 <script>
-import Layout from '../layouts/default.vue'
-import Categoria from '../components/Categoria.vue'
+    import obtenerArtistas  from '../composables/obtenerArtistas' 
 
-export default {
-    name: 'Home',
-    components: {
-        Layout,
-        Categoria
-    },
-    data() {
-        return {
-            categorias: ['Escuchados recientemente','Mis listas de reprodución', 'Artistas Recomendados']
+    import Layout           from '../layouts/default.vue'
+    import Categoria        from '../components/Categoria.vue'
+    import Loader           from '../components/Loader.vue'
+
+    export default {
+        name: 'Home',
+        components: {
+            Layout,
+            Categoria,
+            Loader
+        },
+        setup() {
+            const {load, artistas} = obtenerArtistas()
+
+            load()  
+
+            return {artistas}
         }
     }
-}
 </script>

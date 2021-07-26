@@ -1,17 +1,20 @@
 <template>
     <div class="banner">
         <img class="banner__img img-fluid" 
-             src="../../public/img/album-cover/at-swim.webp" 
-             alt=""
+             :src="banner" 
+             :alt="'Imagen de '+ nombre"
         />
-        <h1 class="banner__titulo"> Lisa Hannigan </h1>
-        <button class="banner__btn btn bg-light"><span>Seguir</span><fa icon="plus"/></button>
+        <h1 class="banner__titulo"> {{nombre}} </h1>
+        <button class="banner__btn btn bg-light">
+            <span>Seguir</span><fa icon="plus"/>
+        </button>
     </div> 
 </template>
 
 <script>
     export default {
-        name: "Banner"
+        name: "Banner",
+        props: ["nombre", "banner"]
     }
 </script>
 

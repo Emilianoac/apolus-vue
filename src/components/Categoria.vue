@@ -2,8 +2,12 @@
     <section class="categoria mt-4">
         <h2 class="titulo-categoria mb-0 mb-lg-4">{{this.titulo}}</h2>
         <div class="row">
-            <div  v-for="card in 4" :key="card" class="col-lg-3 col-6 mt-4 mt-lg-0">
-                <Card/>
+            <div class="col-lg-3 col-6 mt-4 mt-lg-0" v-for="artista in artistas" :key="artista.id">
+                <Card
+                    :nombre="artista.nombre_artista"
+                    :miniatura="artista.banner"
+                    :slug="artista.slug"
+                />
             </div>
         </div>
     </section>
@@ -11,11 +15,10 @@
 
 <script>
     import Card from './Card.vue'
+
     export default {
-        props: ['titulo'],
-        components: {
-            Card
-        }
+        props: ["titulo", "artistas"],
+        components: { Card }
     }
 </script>
 
