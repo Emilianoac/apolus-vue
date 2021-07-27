@@ -5,10 +5,9 @@ module.exports = {
       msTileColor: '#ff7033',
       appleMobileWebAppCapable: 'yes',
       appleMobileWebAppStatusBarStyle: 'black',
-      workboxPluginMode: 'InjectManifest',
+      workboxPluginMode: 'GenerateSW',
       workboxOptions: {
-         swSrc: 'src/registerServiceWorker.js',
-
+        skipWaiting: true,
       }
     },
     chainWebpack: config => {
