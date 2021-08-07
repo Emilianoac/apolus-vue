@@ -30,7 +30,8 @@
 
 <script>
     import { useRoute }     from 'vue-router'
-    import obtenerArtista   from '../composables/obtenerArtista' 
+    import {computed}       from 'vue'
+    import {useStore}       from 'vuex'
 
     import Layout           from '../layouts/default.vue'
     import ListaCanciones   from '../components/ListaCanciones.vue'
@@ -51,12 +52,14 @@
             Loader
         },
         setup() {
+            const store = useStore()
             const route = useRoute()
-            const {load, artista, error} = obtenerArtista(route.params.slug)
 
-            load()
-
-            return {artista, error}
+            store.dispatch('obtenerArtista', route.params.slug)
+        
+            return {
+                artista : computed(() => store.state.artista)
+            }
         }
     }
 </script>

@@ -13,7 +13,9 @@
 </template>
 
 <script>
-    import obtenerArtistas  from '../composables/obtenerArtistas' 
+
+    import {computed} from 'vue'
+    import {useStore} from 'vuex'
 
     import Layout           from '../layouts/default.vue'
     import Categoria        from '../components/Categoria.vue'
@@ -27,11 +29,14 @@
             Loader
         },
         setup() {
-            const {load, artistas} = obtenerArtistas()
+            const store = useStore()
 
-            load()  
+            store.dispatch('obtenerArtistas')
+            const artistas = computed(() => store.state.artistas)
 
-            return {artistas}
+            return {
+                artistas
+            }
         }
     }
 </script>

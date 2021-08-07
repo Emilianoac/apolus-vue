@@ -3,8 +3,8 @@
         <figure class="album mb-4 mb-lg-0" v-for="album in albumes" :key="album">
             <div class="img-container">
                 <img 
-                     class="album__miniatura" 
-                     :src="album.cover_album" 
+                    class="album__miniatura" 
+                    :src="album.cover_album"
                 />
             </div>
             <figcaption class="album__nombre"> 

@@ -5,7 +5,7 @@
                 <div class="reproductor__informacion">
                     <img 
                         class="reproductor__miniatura img-fluid" 
-                        src="../../public/img/album-cover/at-swim.webp" 
+                        src="" 
                         alt="miniatura cancion"
                     />
                     <div class="reproductor__row">

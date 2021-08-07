@@ -2,7 +2,7 @@
     <section class="categoria mt-4">
         <h2 class="titulo-categoria mb-0 mb-lg-4">{{this.titulo}}</h2>
         <div class="row">
-            <div class="col-lg-3 col-6 mt-4 mt-lg-0" v-for="artista in artistas" :key="artista.id">
+            <div  v-for="artista in artistas" :key="artista.id" class="col-lg-3 col-6 mt-4 mt-lg-0">
                 <Card
                     :nombre="artista.nombre_artista"
                     :miniatura="artista.banner"
@@ -18,7 +18,9 @@
 
     export default {
         props: ["titulo", "artistas"],
-        components: { Card }
+        components: {
+            Card
+        }
     }
 </script>
 
