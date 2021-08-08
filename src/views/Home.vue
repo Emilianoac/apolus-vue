@@ -2,7 +2,7 @@
     <Layout>
         <div v-if="artistas.length">
             <Categoria
-                titulo="Escuchados Recientementes"
+                titulo="Más Escuchados"
                 :artistas="artistas" 
             />
         </div>

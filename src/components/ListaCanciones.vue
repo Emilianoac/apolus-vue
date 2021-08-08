@@ -3,12 +3,14 @@
     <div class="lista-canciones mt-4">
         <ul class="lista-canciones__contenido"> 
             <li class="lista-header">
+                <div class="lista-header__cancion">#</div>
                 <div class="lista-header__cancion">Nombre</div>
-                <div class="lista-header__artista">Artista</div>
+                <div class="lista-header__artista">Interprete</div>
                 <div class="lista-header__duracion">Duración</div>
                 <div class="lista-header__favorito"></div>
             </li>
-            <li class="cancion" v-for="cancion in album " :key="cancion">
+            <li class="cancion" v-for="(cancion, index) in cancionesAlbum " :key="index">
+                <div class="cancion__titulo"> {{index + 1}} </div>
                 <div class="cancion__titulo"> {{cancion.nombre_cancion}} </div>
                 <div class="cancion__artista"> {{cancion.interprete_cancion}} </div>   
                 <div class="cancion__duracion"> {{cancion.duracion_cancion}} </div>
@@ -20,13 +22,22 @@
 </template>
 
 <script>
+    import {useStore} from "vuex"
+    import {computed} from "vue"
+
     import BotonFavorito from "./botones/BotonFavorito.vue"
     export default { 
         name: "ListaCanciones",
         components: {
             BotonFavorito
         },
-        props: ["seccion", "titulo", "album"]
+        props: ["seccion", "titulo", "album"],
+        setup(props) {
+            const store = useStore()
+            const cancionesAlbum = computed(() => store.state.reproductorPerfilArtista.lista_canciones)
+
+            return { cancionesAlbum }
+        }
     }
 </script>
 
@@ -41,7 +52,7 @@
 
         .lista-canciones__contenido {
             max-height: 250px;
-            overflow-y: scroll;
+            overflow-y: auto;
             list-style-type: none;
             padding: 0em;
             margin: 0;
@@ -49,7 +60,7 @@
             .lista-header,
             .cancion {
                 display: grid;
-                grid-template-columns: 1fr 1fr 60px 30px;
+                grid-template-columns:14px 1fr 0.8fr 40px 30px;
                 justify-content: space-between;
                 align-items: center; 
                 column-gap: 25px;

@@ -8,12 +8,12 @@
                     :banner="artista.banner"
                 />
                 <h2 class="titulo-categoria mt-5"> Álbumes </h2>
-                <Albumes
+                <PerfilArtistaAlbumes
                     :albumes="artista.albumes"
                 />
             </div>
             <div class="col-xl-5">
-                <ReproductorAlbum 
+                <PerfilArtistaReproductor
                     :artista="artista.nombre_artista"
                     :album="artista.albumes[0]"
                 />
@@ -33,12 +33,12 @@
     import {computed}       from 'vue'
     import {useStore}       from 'vuex'
 
-    import Layout           from '../layouts/default.vue'
-    import ListaCanciones   from '../components/ListaCanciones.vue'
-    import Banner           from '../components/Banner.vue'
-    import Albumes          from '../components/Albumes.vue'
-    import ReproductorAlbum from '../components/ReproductorAlbum.vue'
-    import Loader           from '../components/Loader.vue'
+    import Layout                    from '../layouts/default.vue'
+    import ListaCanciones            from '../components/ListaCanciones.vue'
+    import Banner                    from '../components/Banner.vue'
+    import PerfilArtistaAlbumes      from '../components/PerfilArtistaAlbumes.vue'
+    import PerfilArtistaReproductor  from '../components/PerfilArtistaReproductor.vue'
+    import Loader                    from '../components/Loader.vue'
 
     export default {
         name: "Perfil",
@@ -47,8 +47,8 @@
             Layout,
             ListaCanciones,
             Banner,
-            Albumes,
-            ReproductorAlbum,
+            PerfilArtistaAlbumes,
+            PerfilArtistaReproductor,
             Loader
         },
         setup() {

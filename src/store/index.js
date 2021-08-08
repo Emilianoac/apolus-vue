@@ -5,15 +5,19 @@ export default createStore({
   state: {
     artista : null,
     artistas : [],
-    error : null
+    error : null,
+    reproductorPerfilArtista : null
   },
   mutations: {
     OBTENER_ARTISTA(state, artista) {
       state.artista = artista
+      state.reproductorPerfilArtista = { ...artista.albumes[0], nombre: artista.nombre_artista } 
     },
     OBTENER_ARTISTAS(state, artistas) {
       state.artistas = artistas
-      console.log(state.artistas)
+    },
+    SELECCIONAR_ALBUM(state, album) {
+      state.reproductorPerfilArtista = album
     }
   },
   actions: {

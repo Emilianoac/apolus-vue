@@ -3,21 +3,22 @@
         <div class="reproductor-album__miniatura">
             <img 
                 class="img-fluid" 
-                :src="album.cover_album" 
+                :src="albumReproductor.cover_album" 
                 alt=""
             />
         </div>
         <div class="album-datos">
-            <p class="album-datos__titulo"> {{album.nombre_album}} </p>
-            <p class="album-datos__artista"> {{artista}} </p>
-            <span class="album-datos__lanzamiento"> {{album.fecha_lanzamiento}} </span>
+            <p class="album-datos__titulo"> {{albumReproductor.nombre_album }} </p>
+            <span class="album-datos__lanzamiento"> {{albumReproductor.fecha_lanzamiento}} </span>
         </div>
         <button class="btn btn_play"><fa icon="play-circle"/></button>
-        <BotonFavorito/>
     </div>
 </template>
 
 <script>
+    import {useStore} from "vuex"
+    import {computed} from "vue"
+
     import BotonFavorito from '../components/botones/BotonFavorito.vue'
 
     export default {
@@ -25,6 +26,13 @@
         props: ["artista", "album"],
         components: {
             BotonFavorito
+        },
+        setup(props) {
+            const store = useStore()
+
+            return {
+                albumReproductor : computed(() => store.state.reproductorPerfilArtista)
+            }
         }
     }
 </script>
@@ -39,7 +47,7 @@
         position: relative;
         border-radius: 8px;
         padding: 0.6em;
-        padding-right: 2.5em;
+        padding-right: 1.7em;
         background-color: var(--bg-color-oscuro);
 
         .reproductor-album__miniatura {
@@ -47,6 +55,7 @@
 
             img {
                 object-fit: cover;
+                height: 65px;
                 border-radius: 8px;
             }
         }
