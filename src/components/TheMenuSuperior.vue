@@ -2,7 +2,7 @@
     <nav class="menu-principal navbar navbar-expand-lg shadow">
         <div class="container-fluid">
             <router-link to="/" class="navbar-brand">
-                <LogotipoSitio/>
+                <BaseLogotipoSitio/>
             </router-link>     
             <button class="navbar-toggler" 
                     @click="mostrarOffCanvas" 
@@ -22,9 +22,9 @@
                         @click="ocultarOffCanvas">
                         <fa icon="times"/>
                 </button>
-                <Buscador/>
+                <BaseBuscador/>
                 <router-link to="/" class="navbar-brand text-center d-block d-lg-none mx-auto mt-3">
-                    <LogotipoSitio/>
+                    <BaseLogotipoSitio/>
                 </router-link> 
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item me-3 order-1 order-lg-0 mt-2 mt-lg-0">
@@ -63,19 +63,19 @@
             </div>
         </div>
         <div class="container-fluid d-block d-lg-none py-2">
-            <Buscador />
+            <BaseBuscador />
         </div>
     </nav>
 </template>
 
 <script>
-    import LogotipoSitio from './LogotipoSitio.vue'
-    import Buscador from './Buscador.vue'
+    import BaseLogotipoSitio from './BaseLogotipoSitio.vue'
+    import BaseBuscador from './BaseBuscador.vue'
     export default {
-        name: "NavegacionSuperior",
+        name: "TheMenuSuperior",
         components: {
-            LogotipoSitio,
-            Buscador
+            BaseLogotipoSitio,
+            BaseBuscador
         },
         data() {
             return {

@@ -19,13 +19,10 @@
     import {useStore} from "vuex"
     import {computed} from "vue"
 
-    import BotonFavorito from '../components/botones/BotonFavorito.vue'
-
     export default {
-        name: "ReproductorAlbum",
+        name: "PerfilArtistaReproductor",
         props: ["artista", "album"],
         components: {
-            BotonFavorito
         },
         setup(props) {
             const store = useStore()

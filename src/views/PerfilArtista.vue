@@ -3,7 +3,7 @@
         <div v-if="error">{{ error }}</div>
         <div class="row" v-if="artista">
             <div class="col-xl-7 mb-5">
-                <Banner 
+                <BaseBanner 
                     :nombre="artista.nombre_artista"
                     :banner="artista.banner"
                 />
@@ -17,7 +17,7 @@
                     :artista="artista.nombre_artista"
                     :album="artista.albumes[0]"
                 />
-                <ListaCanciones
+                <ListadoCanciones
                     :album="artista.albumes[0].lista_canciones"
                 />
             </div>
@@ -33,23 +33,23 @@
     import {computed}       from 'vue'
     import {useStore}       from 'vuex'
 
-    import Layout                    from '../layouts/default.vue'
-    import ListaCanciones            from '../components/ListaCanciones.vue'
-    import Banner                    from '../components/Banner.vue'
-    import PerfilArtistaAlbumes      from '../components/PerfilArtistaAlbumes.vue'
-    import PerfilArtistaReproductor  from '../components/PerfilArtistaReproductor.vue'
-    import Loader                    from '../components/Loader.vue'
+    import Layout                     from '../layouts/default.vue'
+    import ListadoCanciones           from '../components/ListadoCanciones.vue'
+    import BaseBanner                 from '../components/BaseBanner.vue'
+    import PerfilArtistaAlbumes       from '../components/PerfilArtistaAlbumes.vue'
+    import PerfilArtistaReproductor   from '../components/PerfilArtistaReproductor.vue'
+    import TheLoader                  from '../components/TheLoader.vue'
 
     export default {
-        name: "Perfil",
+        name: "PerfilArtista",
         props: ["id"],
         components: {
             Layout,
-            ListaCanciones,
-            Banner,
+            ListadoCanciones,
+            BaseBanner,
             PerfilArtistaAlbumes,
             PerfilArtistaReproductor,
-            Loader
+            TheLoader
         },
         setup() {
             const store = useStore()

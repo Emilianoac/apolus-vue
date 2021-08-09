@@ -14,7 +14,7 @@
                 <div class="cancion__titulo"> {{cancion.nombre_cancion}} </div>
                 <div class="cancion__artista"> {{cancion.interprete_cancion}} </div>   
                 <div class="cancion__duracion"> {{cancion.duracion_cancion}} </div>
-                <BotonFavorito/>
+                <BaseBotonFavorito/>
             </li> 
         </ul>
     </div>
@@ -25,11 +25,11 @@
     import {useStore} from "vuex"
     import {computed} from "vue"
 
-    import BotonFavorito from "./botones/BotonFavorito.vue"
+    import BaseBotonFavorito from "./BaseBotonFavorito.vue"
     export default { 
-        name: "ListaCanciones",
+        name: "ListadoCanciones",
         components: {
-            BotonFavorito
+            BaseBotonFavorito
         },
         props: ["seccion", "titulo", "album"],
         setup(props) {

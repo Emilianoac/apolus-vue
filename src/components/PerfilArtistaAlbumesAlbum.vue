@@ -12,10 +12,9 @@
 
 <script>
     import {useStore} from "vuex"
-    import {watch} from "vue"
  
     export default {
-        name: "Album",
+        name: "PerfilArtistaAlbumesAlbum",
         props: ["album"],
         setup(props) {
             const store = useStore()

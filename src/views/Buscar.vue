@@ -1,27 +1,27 @@
 <template>
     <Layout>
         <h1 class="titulo-principal mb-5">Busqueda</h1>
-        <Categoria titulo="Busquedas Recientes"/>
-        <ListaCanciones 
+        <ResultadoCategoria  titulo="Busquedas Recientes"/>
+        <ListadoCanciones 
             seccion="busqueda" 
             titulo="Canciones"
         />
-        <Categoria titulo="Artistas"/>
-        <Categoria titulo="Listas de reproducción"/>
+        <ResultadoCategoria titulo="Artistas"/>
+        <ResultadoCategoria  titulo="Listas de reproducción"/>
     </Layout>
 </template>
 
 <script>
-    import Layout           from "../layouts/default.vue"
-    import ListaCanciones   from "../components/ListaCanciones.vue"
-    import Categoria        from "../components/Categoria.vue"
+    import Layout               from "../layouts/default.vue"
+    import ListadoCanciones     from "../components/ListadoCanciones.vue"
+    import ResultadoCategoria   from "../components/ResultadoCategoria.vue"
 
     export default {
         name: "Buscar",
         components: {
             Layout,
-            ListaCanciones,
-            Categoria
+            ListadoCanciones,
+            ResultadoCategoria 
         }
     }
 </script>

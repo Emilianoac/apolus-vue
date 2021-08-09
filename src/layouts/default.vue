@@ -1,24 +1,24 @@
 <template>
     <div class="main-container">
-        <NavegacionSuperior/>
+        <TheMenuSuperior/>
         <main class="main">
             <slot> </slot>
         </main>
-        <MenuLateral/>
-        <Reproductor/>
+        <TheMenuLateral/>
+        <BaseReproductor/>
     </div>
 </template>
 
 <script>
-    import NavegacionSuperior from '../components/NavegacionSuperior.vue'
-    import MenuLateral from '../components/MenuLateral.vue'
-    import Reproductor from '../components/Reproductor.vue'
+    import TheMenuSuperior from '../components/TheMenuSuperior.vue'
+    import TheMenuLateral from '../components/TheMenuLateral.vue'
+    import BaseReproductor from '../components/BaseReproductor.vue'
     export default {
         name: 'Default',
         components: {
-            NavegacionSuperior,
-            MenuLateral,
-            Reproductor
+            TheMenuSuperior,
+            TheMenuLateral,
+            BaseReproductor
         }
     }
 </script>

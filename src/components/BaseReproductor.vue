@@ -12,12 +12,12 @@
                         <p class="reproductor__titulo-cancion">SupaLonely</p>
                         <span class="reproductor__artista">Benee</span>
                     </div>
-                    <BotonFavorito/>
+                    <BaseBotonFavorito/>
                 </div>
             </div>
             <div class="col-sm-4 col-5 d-flex justify-content-end justify-content-lg-center">
                 <button class="control control_retroceder"><fa icon="backward"/></button>
-                <BotonPlay/>
+                <BaseBotonPlay/>
                 <button class="control control_avanzar"><fa icon="forward"/></button>
             </div>
             <div class="col-sm-4 d-none d-sm-flex justify-content-end align-items-center">
@@ -25,20 +25,20 @@
                 <button class="control control__volumen btn p-0 ms-3"><fa icon="volume-up"/></button>
             </div>
         </div>
-        <MenuMovil/>
+        <TheMenuMovil/>
     </aside>
 </template>
 
 <script>
-    import MenuMovil       from "./MenuMovil.vue"
-    import BotonFavorito   from "./botones/BotonFavorito.vue"
-    import BotonPlay       from "./botones/BotonPlay.vue"
+    import TheMenuMovil       from "./TheMenuMovil.vue"
+    import BaseBotonFavorito   from "./BaseBotonFavorito.vue"
+    import BaseBotonPlay       from "./BaseBotonPlay.vue"
 
     export default {
         components: {
-            MenuMovil,
-            BotonFavorito,
-            BotonPlay
+            TheMenuMovil,
+            BaseBotonFavorito,
+            BaseBotonPlay
         }
     }
 </script>

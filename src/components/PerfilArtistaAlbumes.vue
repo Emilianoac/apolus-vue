@@ -15,7 +15,7 @@
     import PerfilArtistaAlbumesAlbum from "./PerfilArtistaAlbumesAlbum.vue"
  
     export default {
-        name: "Albumes",
+        name: "PerfilArtistaAlbumes",
         props: ["albumes"],
         components: {
             PerfilArtistaAlbumesAlbum

@@ -10,17 +10,17 @@
             </div>
             <p class="card__titulo">{{nombre}}</p>
         </router-link>
-        <BotonPlay/>
+        <BaseBotonPlay/>
     </article>
 </template>
 
 <script>
-    import BotonPlay from "./botones/BotonPlay.vue"
+    import BaseBotonPlay from "./BaseBotonPlay.vue"
 
     export default {
-        name: "Card",
+        name: "ResultadoCategoriaTarjeta",
         components: {
-            BotonPlay
+            BaseBotonPlay
         },
         props: ["nombre", "miniatura", "slug"]
     }

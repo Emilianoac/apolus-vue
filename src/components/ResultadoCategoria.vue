@@ -3,7 +3,7 @@
         <h2 class="titulo-categoria mb-0 mb-lg-4">{{this.titulo}}</h2>
         <div class="row">
             <div  v-for="artista in artistas" :key="artista.id" class="col-lg-3 col-6 mt-4 mt-lg-0">
-                <Card
+                <ResultadoCategoriaTarjeta
                     :nombre="artista.nombre_artista"
                     :miniatura="artista.banner"
                     :slug="artista.slug"
@@ -14,12 +14,12 @@
 </template>
 
 <script>
-    import Card from './Card.vue'
+    import ResultadoCategoriaTarjeta from './ResultadoCategoriaTarjeta.vue'
 
     export default {
         props: ["titulo", "artistas"],
         components: {
-            Card
+            ResultadoCategoriaTarjeta 
         }
     }
 </script>

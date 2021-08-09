@@ -1,13 +1,13 @@
 <template>
     <Layout>
         <div v-if="artistas.length">
-            <Categoria
+            <ResultadoCategoria
                 titulo="Más Escuchados"
                 :artistas="artistas" 
             />
         </div>
         <div v-else>
-            <Loader/>
+            <TheLoader/>
         </div>
     </Layout>
 </template>
@@ -17,16 +17,16 @@
     import {computed} from 'vue'
     import {useStore} from 'vuex'
 
-    import Layout           from '../layouts/default.vue'
-    import Categoria        from '../components/Categoria.vue'
-    import Loader           from '../components/Loader.vue'
+    import Layout               from '../layouts/default.vue'
+    import ResultadoCategoria   from '../components/ResultadoCategoria.vue'
+    import TheLoader            from '../components/TheLoader.vue'
 
     export default {
         name: 'Home',
         components: {
             Layout,
-            Categoria,
-            Loader
+            ResultadoCategoria,
+            TheLoader
         },
         setup() {
             const store = useStore()

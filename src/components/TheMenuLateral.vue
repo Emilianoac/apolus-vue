@@ -62,7 +62,7 @@
 
 <script>
     export default {
-        name: 'MenuLateral',
+        name: 'TheMenuLateral',
     }
 </script>
 
