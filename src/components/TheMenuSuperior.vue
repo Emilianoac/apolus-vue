@@ -176,6 +176,7 @@
                 font-size: 0.95rem;
             }
         }
+
         .switch {
             position: relative;
             display: inline-block;
@@ -249,7 +250,7 @@
         }
     }
 
-    @media(max-width:989px) {
+    @media(max-width:991px) {
 
         .menu-principal {
             

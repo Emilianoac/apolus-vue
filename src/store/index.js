@@ -5,6 +5,7 @@ export default createStore({
   state: {
     artista : null,
     artistas : [],
+    cancionActualReproductor: null,
     error : null,
     reproductorPerfilArtista : null
   },
@@ -18,6 +19,10 @@ export default createStore({
     },
     SELECCIONAR_ALBUM(state, album) {
       state.reproductorPerfilArtista = album
+    },
+    SELECCIONAR_CANCION_ACTUAL(state, cancionActual) {
+      console.log(cancionActual)
+      state.cancionActualReproductor =  cancionActual
     }
   },
   actions: {

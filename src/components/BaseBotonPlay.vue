@@ -1,18 +1,18 @@
 <template>
-    <button class="btn_play">
+    <button class="boton boton_play">
         <fa icon="play-circle" />
     </button>
 </template>
 
 <script>
     export default {
-        name: "BotonPlay"
+        name: "BaseBotonPlay"
     }
 </script>
 
 <style lang="scss">
 
-    .btn_play {
+    .boton_play {
         position: relative;
         display: inline-flex;
         justify-content: center;

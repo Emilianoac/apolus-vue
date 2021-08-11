@@ -1,5 +1,5 @@
 <template>
-    <button class="btn_favorito">
+    <button class="boton boton_favorito">
         <fa icon="heart"/>
     </button>
 </template>
@@ -10,7 +10,7 @@
 
 <style lang="scss">
 
-    .btn_favorito {
+    .boton_favorito {
         font-size: 1.2em;
         padding: 0;
         border: 0;

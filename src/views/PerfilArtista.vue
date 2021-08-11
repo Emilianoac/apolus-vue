@@ -23,7 +23,7 @@
             </div>
         </div>
         <div v-else>
-            <Loader/>
+            <TheLoader/>
         </div>
     </Layout>
 </template>

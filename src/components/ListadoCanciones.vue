@@ -1,5 +1,8 @@
 <template>
-    <h2 class="titulo-categoria titulo-categoria_lista-canciones" v-show="seccion == 'busqueda'"> {{ titulo }} </h2>
+    <h2 v-show="seccion == 'busqueda'" 
+        class="titulo-categoria titulo-categoria_lista-canciones"> 
+        {{ titulo }} 
+    </h2>
     <div class="lista-canciones mt-4">
         <ul class="lista-canciones__contenido"> 
             <li class="lista-header">
@@ -9,13 +12,14 @@
                 <div class="lista-header__duracion">Duración</div>
                 <div class="lista-header__favorito"></div>
             </li>
-            <li class="cancion" v-for="(cancion, index) in cancionesAlbum " :key="index">
-                <div class="cancion__titulo"> {{index + 1}} </div>
-                <div class="cancion__titulo"> {{cancion.nombre_cancion}} </div>
-                <div class="cancion__artista"> {{cancion.interprete_cancion}} </div>   
-                <div class="cancion__duracion"> {{cancion.duracion_cancion}} </div>
-                <BaseBotonFavorito/>
-            </li> 
+            <ListaCancionesCancion v-for="(cancion, index) in cancionesAlbum" 
+                :key="index"
+                :nombre_cancion="cancion.nombre_cancion"
+                :interprete_cancion="cancion.interprete_cancion"
+                :duracion_cancion="cancion.duracion_cancion"
+                :posicion_cancion="index + 1"
+                :cover_album="coverAlbum"
+            />
         </ul>
     </div>
     <hr v-show="seccion == 'busqueda'" class="separador">
@@ -26,17 +30,22 @@
     import {computed} from "vue"
 
     import BaseBotonFavorito from "./BaseBotonFavorito.vue"
+    import ListaCancionesCancion from "./ListadoCancionesCancion.vue"
+
     export default { 
         name: "ListadoCanciones",
         components: {
+            ListaCancionesCancion,
             BaseBotonFavorito
         },
         props: ["seccion", "titulo", "album"],
         setup(props) {
             const store = useStore()
-            const cancionesAlbum = computed(() => store.state.reproductorPerfilArtista.lista_canciones)
 
-            return { cancionesAlbum }
+            const cancionesAlbum = computed(() => store.state.reproductorPerfilArtista.lista_canciones)
+            const coverAlbum = computed(() => store.state.reproductorPerfilArtista.cover_album )
+
+            return { cancionesAlbum, coverAlbum }
         }
     }
 </script>
@@ -57,37 +66,17 @@
             padding: 0em;
             margin: 0;
 
-            .lista-header,
-            .cancion {
+            .lista-header {
                 display: grid;
                 grid-template-columns:14px 1fr 0.8fr 40px 30px;
                 justify-content: space-between;
                 align-items: center; 
                 column-gap: 25px;
-                font-size: 0.84em;
                 padding: 0.6em;
-                border-bottom: 1px solid var(--border-color);
-                transition: background-color 0.5s cubic-bezier(0.215, 0.610, 0.355, 1);
-
-                .cancion__titulo, 
-                .cancion__artista  {
-                    white-space: nowrap;
-                    text-overflow:ellipsis;
-                    overflow: hidden;
-                }
-
-                &:hover {
-                    background-color: var(--bg-color-medio);
-                }
-            }
-
-            .lista-header {
                 font-weight: 600;
                 font-size: 0.95em;
-
-                &:hover {
-                    background-color: unset;
-                }
+                border-bottom: 1px solid var(--border-color);
+                transition: background-color 0.5s cubic-bezier(0.215, 0.610, 0.355, 1);
             }
         }
     }
@@ -134,36 +123,6 @@
 
                 .lista-header {
                     display: none;
-                }
-        
-                .cancion {
-                    position: relative;
-                    grid-template-columns: 1fr max-content;
-                    column-gap: 10px;
-                    padding: 1.4em;
-
-                    .cancion__titulo {
-                        font-size: 1.1em;
-                        font-weight: bold;
-                    }
-
-                    .cancion__artista {
-                        grid-row: 2;
-                        grid-column: 1;
-                        font-size: 0.90em;
-                    }
-
-                    .cancion__duracion {
-                        grid-row: 2;
-                        text-align: end;
-                    }
-
-                    .btn_favorito {
-                        position: absolute;
-                        top: 10px;
-                        right: 17px;
-                        font-size: 1em;
-                    }
                 }
             }
             

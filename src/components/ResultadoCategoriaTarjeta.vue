@@ -73,8 +73,7 @@
             opacity: 0.6;
         }
 
-        .btn_play ,
-        .btn-play {
+        .boton_play {
             position: absolute;
             right: 10px;
             top: 10px;

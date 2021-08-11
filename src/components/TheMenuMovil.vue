@@ -36,6 +36,8 @@
         .menu-movil__link {
             color:var(--text-color);
             padding: 0;
+            border: 0;
+            background-color: transparent;
         }
     }
 </style>

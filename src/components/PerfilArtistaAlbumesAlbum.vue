@@ -5,7 +5,7 @@
         </div>
         <figcaption class="album__nombre"> 
             {{ album.nombre_album }} 
-            <time class="album__fecha" datetime="2019-06-28">( {{ album.fecha_lanzamiento }} )</time>
+            <span class="album__fecha">( {{ album.fecha_lanzamiento }} )</span>
         </figcaption>
     </figure>
 </template>
@@ -56,7 +56,7 @@
             margin-top: 0.5em;
             transition: opacity 0.4s cubic-bezier(0.645, 0.045, 0.355, 1);
 
-            time {
+            span {
                 display: block;
                 font-size: 0.88em;
                 font-weight: normal;

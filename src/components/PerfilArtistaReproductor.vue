@@ -11,7 +11,7 @@
             <p class="album-datos__titulo"> {{albumReproductor.nombre_album }} </p>
             <span class="album-datos__lanzamiento"> {{albumReproductor.fecha_lanzamiento}} </span>
         </div>
-        <button class="btn btn_play"><fa icon="play-circle"/></button>
+        <BaseBotonPlay/>
     </div>
 </template>
 
@@ -19,10 +19,13 @@
     import {useStore} from "vuex"
     import {computed} from "vue"
 
+    import BaseBotonPlay from './BaseBotonPlay.vue'
+
     export default {
         name: "PerfilArtistaReproductor",
         props: ["artista", "album"],
         components: {
+            BaseBotonPlay
         },
         setup(props) {
             const store = useStore()

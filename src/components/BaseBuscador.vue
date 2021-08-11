@@ -23,7 +23,7 @@
 
 <style lang="scss">
     .buscador {
-        max-width: 500px;
+        max-width: 480px;
         width: 100%;
 
         .buscador__input,

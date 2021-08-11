@@ -5,20 +5,21 @@
             <slot> </slot>
         </main>
         <TheMenuLateral/>
-        <BaseReproductor/>
+        <BarraControl/>
     </div>
 </template>
 
 <script>
     import TheMenuSuperior from '../components/TheMenuSuperior.vue'
-    import TheMenuLateral from '../components/TheMenuLateral.vue'
+    import TheMenuLateral  from '../components/TheMenuLateral.vue'
     import BaseReproductor from '../components/BaseReproductor.vue'
+    import BarraControl    from '../components/BarraControl.vue'
     export default {
         name: 'Default',
         components: {
             TheMenuSuperior,
             TheMenuLateral,
-            BaseReproductor
+            BarraControl
         }
     }
 </script>
@@ -27,11 +28,12 @@
 <style lang="scss">
 
     .main-container {
+        height: 100%;
+        position: relative;
         display: grid;
         grid-template-columns: 70px 1fr;
         grid-template-rows: min-content;
-        height: 100%;
-        position: relative;
+        padding-bottom: 4em;
     }
 
     .main {
