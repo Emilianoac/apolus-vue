@@ -1,42 +1,34 @@
 <template>
-    <Layout>
-        <div v-if="artistas.length">
-            <ResultadoCategoria
-                titulo="Más Escuchados"
-                :artistas="artistas" 
-            />
-        </div>
-        <div v-else>
-            <TheLoader/>
-        </div>
-    </Layout>
+  <ResultadoCategoria 
+    v-if="artistas.length"
+    titulo="Más Escuchados"
+    :artistas="artistas" 
+  />
+  <TheLoader v-else/>
+
+  <ResultadoCategoria 
+    v-if="artistas.length"
+    titulo="Grades exitos del 2000"
+    :artistas="artistas" 
+  />
+  <TheLoader v-else/>
+
+  <ResultadoCategoria 
+    v-if="artistas.length"
+    titulo="En loop"
+    :artistas="artistas" 
+  />
+  <TheLoader v-else/>
 </template>
 
-<script>
+<script setup>
+  import {computed} from 'vue'
+  import {useStore} from 'vuex'
 
-    import {computed} from 'vue'
-    import {useStore} from 'vuex'
+  import ResultadoCategoria   from '../components/ResultadoCategoria.vue'
+  import TheLoader            from '../components/TheLoader.vue'
 
-    import Layout               from '../layouts/default.vue'
-    import ResultadoCategoria   from '../components/ResultadoCategoria.vue'
-    import TheLoader            from '../components/TheLoader.vue'
-
-    export default {
-        name: 'Home',
-        components: {
-            Layout,
-            ResultadoCategoria,
-            TheLoader
-        },
-        setup() {
-            const store = useStore()
-
-            store.dispatch('obtenerArtistas')
-            const artistas = computed(() => store.state.artistas)
-
-            return {
-                artistas
-            }
-        }
-    }
+  const store = useStore()
+  store.dispatch('obtenerArtistas')
+  const artistas = computed(() => store.state.artistas)
 </script>
