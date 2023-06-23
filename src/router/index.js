@@ -33,9 +33,11 @@ const router = createRouter({
 })
 
 router.beforeEach((toRoute, fromRoute, next) => {
-  console.log(fromRoute)
-  window.document.title = toRoute.meta && toRoute.params.slug ? 
-  `${toRoute.params.slug.split('-').join(' ')} | Apolus` : 'Apolus'
+  if(toRoute.meta && toRoute.params.slug ) {
+    window.document.title = `${toRoute.params.slug.split('-').join(' ')} | Apolus`
+  } else {
+    window.document.title = 'Apolus | Tu musica favorita siempre contigo'
+  }
   next()
 })
 
