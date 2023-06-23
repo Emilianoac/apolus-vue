@@ -13,7 +13,7 @@ module.exports = {
     chainWebpack: config => {
       config.plugin('html').tap(args => 
         { 
-          args[0].title = "Apolus"; 
+          args[0].title = "Apolus | Tu musica favorita siempre contigo"; 
           return args;
         })
     }
