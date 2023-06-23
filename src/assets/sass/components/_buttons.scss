@@ -1,0 +1,11 @@
+
+
+.btn-primary {
+  background: var(--color-secundario);
+  border: var(--color-secundario);
+
+  &:hover {
+    background: var(--color-secundario-hover);
+    border: var(--color-secundario-hover);
+  }
+}

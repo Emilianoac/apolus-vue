@@ -1,16 +1,18 @@
 :root {
-    --color-primario    :    hsl(18, 100%, 60%);
-    --color-secundario  :    hsl(249, 77%, 55%);
-    --text-color        :    hsl(0, 0%, 100%);
-    --border-color      :    hsl(0, 0%, 21%);
-    --bg-color-claro    :    hsl(0, 0%, 16%);
-    --bg-color-medio   :     hsl(0, 0%, 14%);
-    --bg-color-oscuro   :    hsl(0, 0%, 12%);
+    --color-primario        :    hsl(18, 100%, 60%);
+    --color-primario-hover  :    hsl(18, 96%, 64%);
+    --color-secundario      :    hsl(249, 77%, 55%);
+    --color-secundario-hover :    hsl(249, 84%, 61%);
+    --text-color            :    hsl(0, 0%, 100%);
+    --border-color          :    hsl(0, 0%, 21%);
+    --bg-color-claro        :    hsl(0, 0%, 16%);
+    --bg-color-medio        :    hsl(0, 0%, 14%);
+    --bg-color-oscuro       :    hsl(0, 0%, 12%);
 }
 
 body.tema-claro {
     --text-color        :    hsl(0, 0%, 9%);
-    --border-color      :    hsl(0, 0%, 80%);
+    --border-color      :    hsl(0, 2%, 92%);
     --bg-color-claro    :    hsl(0, 0%, 100%);
     --bg-color-medio   :     hsl(0, 0%, 86%);
     --bg-color-oscuro   :    hsl(0, 0%, 90%);

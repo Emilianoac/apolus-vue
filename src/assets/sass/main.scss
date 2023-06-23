@@ -2,11 +2,15 @@
 // fonts 
 @import url('https://fonts.googleapis.com/css2?family=Work+Sans:wght@400;600;700&display=block');
 
-// Abstracts
-@import './abstracts/abstracts';
-
 // Vendors
 @import '../../../node_modules/bootstrap/scss/bootstrap.scss';
 
+// Abstracts
+@import './abstracts/abstracts';
+
 // Base 
 @import './base/base';
+
+// Components
+@import './components/buttons';
+@import './components/modals';
