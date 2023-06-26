@@ -8,7 +8,7 @@
 
   <ResultadoCategoria 
     v-if="artistas.length"
-    titulo="Grades exitos del 2000"
+    titulo="Grandes exitos del 2000"
     :artistas="artistas" 
   />
   <TheLoader v-else/>
