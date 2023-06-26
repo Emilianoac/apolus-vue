@@ -54,10 +54,15 @@
 
 }
 
-
+.modal-backdrop.show {
+  opacity: 1;
+  backdrop-filter: blur(4px);
+  background: rgba(0, 0, 0, 0.734);
+}
 
 /// Media queries
 @media (max-width: 690px) {
+
   .modal-apolus {
     font-size: 0.9rem;
   }

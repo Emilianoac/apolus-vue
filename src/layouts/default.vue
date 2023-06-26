@@ -18,13 +18,18 @@ import BarraControl from '../components/BarraControl.vue'
 
 
 <style lang="scss">
+
+  body {
+    overflow: hidden;
+  }
+
   .main-container {
     height: 100%;
     position: relative;
     display: grid;
     grid-template-columns: 70px 1fr;
     grid-template-rows: min-content;
-    padding-bottom: 4em;
+    //padding-bottom: 4em;
   }
 
   .main {
@@ -37,6 +42,8 @@ import BarraControl from '../components/BarraControl.vue'
     z-index: 1;
     overflow-x: hidden;
     overflow-y: auto;
+    max-height: 100vh;
+    padding-bottom: 8em;
   }
 
   @media(max-width:991px) {

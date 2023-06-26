@@ -21,6 +21,19 @@
       background-color: var(--bg-color-claro);
       border: 1px solid var(--border-color);
       color: var(--text-color);
+
+      &:focus {
+        background: var(--bg-color-claro);
+        color: var(--text-color);
+      }
+    }
+
+    .buscador__input {
+
+      &::placeholder {
+        color: var(--text-color);
+        opacity: 0.6;
+      }
     }
   }
 
