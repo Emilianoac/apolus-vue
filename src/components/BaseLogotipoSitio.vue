@@ -41,7 +41,27 @@
 
 <style lang="scss">
   .logotipo-sitio {
-    width: 100;
+    width: 100px;
     margin: auto;
+
+    .st0 {
+      fill: var(--text-color);
+    }
+
+    .st1 {
+      fill: none;
+      stroke: var(--color-primario);
+      stroke-width: 17.2795;
+      stroke-miterlimit: 10;
+    }
+
+    .circulo-marca {
+      transition: 0.7s ease-in-out;
+      transform-origin: center;
+    }
+
+    .circulo-marca.girar {
+      transform: rotate(360deg);
+    }
   }
 </style>
