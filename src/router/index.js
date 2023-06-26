@@ -23,6 +23,12 @@ const routes = [
     path: '/buscar',
     name: 'Buscar',
     component: Buscar
+  },
+
+  {
+    path: '/anadir-artista',
+    name: 'Añadir artista',
+    component: () => import('../views/AnadirArtista.vue'),
   }
 ]
 
