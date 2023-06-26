@@ -1,7 +1,7 @@
 <template>
   <nav class="menu-principal navbar navbar-expand-lg shadow">
     <div class="container-fluid">
-      <router-link to="/" class="navbar-brand"><BaseLogotipoSitio /></router-link>
+      <router-link to="/" class="navbar-brand"><BaseLogotipoSitio/></router-link>
       <button 
         class="navbar-toggler" 
         @click="toggleOffCanvas" 
@@ -22,16 +22,25 @@
         <router-link to="/" class="navbar-brand text-center d-block d-lg-none mx-auto mt-3">
           <BaseLogotipoSitio />
         </router-link>
+        <BaseBuscador />
         <ul class="navbar-nav ms-auto">
           <li class="nav-item me-3 order-1 order-lg-0 mt-2 mt-lg-0">
-            <a class="nav-link active" aria-current="page" data-bs-toggle="modal" data-bs-target="#iniciarsesion"
+            <a 
+              class="nav-link" 
+              aria-current="page" 
+              data-bs-toggle="modal" 
+              data-bs-target="#modalLogin"
               href="#!">
               Iniciar sesión
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link btn btn-primary text-white px-3" aria-current="page" data-bs-toggle="modal"
-              data-bs-target="#registrarse" href="#!">
+            <a 
+              class="btn btn-primary text-white px-3" 
+              aria-current="page" 
+              data-bs-toggle="modal"
+              data-bs-target="#modalRegistro" 
+              href="#!">
               Crear una cuenta
             </a>
           </li>
@@ -48,13 +57,20 @@
       <BaseBuscador />
     </div>
   </nav>
+
+  <Teleport to="body">
+    <ModalRegistro/>
+    <ModalLogin/>
+  </Teleport>
 </template>
 
 <script setup>
   import { ref, watch, onMounted } from 'vue';
 
-  import BaseLogotipoSitio from './BaseLogotipoSitio.vue'
-  import BaseBuscador from './BaseBuscador.vue'
+  import BaseLogotipoSitio  from "./BaseLogotipoSitio.vue"
+  import BaseBuscador       from "./BaseBuscador.vue"
+  import ModalRegistro      from "./modals/Registro.vue"
+  import ModalLogin         from "./modals/Login.vue"
 
   const modoClaro = ref(localStorage.modoCLaro)
   const menu = ref(null)
@@ -83,8 +99,13 @@
   watch(modoClaro, () => {
     let $body = document.body
     localStorage.setItem("modoClaro", modoClaro.value)
-    if (localStorage.modoClaro == "true") $body.classList.add('tema-claro')
-    else $body.removeAttribute("class")
+    if (localStorage.modoClaro == "true") {
+      $body.classList.add('tema-claro')
+      $body.querySelector('.logotipo-sitio .circulo-marca').classList.toggle('girar')
+    } else {
+      $body.removeAttribute("class")
+      $body.querySelector('.logotipo-sitio .circulo-marca').classList.toggle('girar')
+    }
   })
 
   onMounted(() => {
@@ -93,6 +114,7 @@
 </script>
 
 <style lang="scss">
+
   .menu-principal {
     display: block;
     position: fixed;
@@ -106,7 +128,8 @@
       font-size: 0.94em;
       color: var(--text-color);
 
-      &:hover {
+      &:hover, &:focus {
+        color: var(--text-color);
         opacity: 0.7;
       }
     }
@@ -116,27 +139,6 @@
       svg {
         width: 100px;
       }
-
-      .st0 {
-        fill: var(--text-color);
-      }
-
-      .st1 {
-        fill: none;
-        stroke: var(--color-primario);
-        stroke-width: 17.2795;
-        stroke-miterlimit: 10;
-      }
-
-      .circulo-marca {
-        transition: 0.7s ease-in-out;
-        transform-origin: center;
-      }
-
-      .circulo-marca.girar {
-        transform: rotate(360deg);
-      }
-
     }
 
     .navbar-toggler {
