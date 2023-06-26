@@ -42,7 +42,7 @@ export default createStore({
     },
     async obtenerArtistas({commit, state}) {
       try {
-        const res = await apolusFirebase.collection('artistas').limit(4).get()
+        const res = await apolusFirebase.collection('artistas').limit(5).get()
   
         let resData = res.docs.map(doc => {
          return { ...doc.data(), id: doc.id }

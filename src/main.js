@@ -1,12 +1,13 @@
-import { createApp } from 'vue'
-import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-import {library} from '@fortawesome/fontawesome-svg-core'
-import {fas} from '@fortawesome/free-solid-svg-icons'
-import '../node_modules/bootstrap/js/dist/modal'
-import App from './App.vue'
-import './registerServiceWorker'
-import router from './router'
-import store from './store'
+import { createApp } from "vue"
+import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome"
+import {library} from "@fortawesome/fontawesome-svg-core"
+import {fas}  from "@fortawesome/free-solid-svg-icons"
+import "../node_modules/bootstrap/js/dist/modal"
+import "./registerServiceWorker"
+import App from "./App.vue"
+import router from "./router"
+import store from "./store"
+
 
 library.add(fas)
 
