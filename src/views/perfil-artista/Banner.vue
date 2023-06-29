@@ -1,11 +1,16 @@
 <template>
   <div class="banner">
-    <img class="banner__img img-fluid" :src="banner" :alt="'Imagen de ' + nombre" />
-    <h1 class="banner__titulo"> {{ nombre }} </h1>
-    <button class="banner__btn btn bg-light">
-      <span>Seguir</span>
-      <fa icon="plus" />
-    </button>
+    <img class="banner__img img-fluid" :src="banner"/>
+    <div class="banner__info">
+      <h1 class="banner__titulo"> {{ nombre }} </h1>
+      <p class="banner__oyentes mt-2">19.359 Oyentes mensuales</p>
+    </div>
+    <div class="banner__acciones">
+      <button class="banner__seguir btn bg-light ms-2">
+        <span>Seguir</span>
+        <fa icon="plus" />
+      </button>
+    </div>
   </div>
 </template>
 
@@ -17,26 +22,36 @@
 </script>
 
 <style lang="scss">
+
   .banner {
     position: relative;
 
     .banner__img {
-      height: 160px;
+      height: 190px;
       width: 100%;
       object-fit: cover;
       border-radius: 9px;
       overflow: hidden;
     }
 
-    .banner__titulo,
-    .banner__btn {
+    .banner__info,
+    .banner__acciones {
       position: absolute;
       z-index: 2;
     }
 
-    .banner__titulo {
+    .banner__info {
       top: 10px;
       left: 20px;
+
+      .banner__oyentes {
+        font-size: 1.1em;
+        color: white;
+      }
+    }
+    
+
+    .banner__titulo {
       font-size: 2.4em;
       font-weight: 700;
       letter-spacing: 2px;
@@ -46,8 +61,13 @@
       border-bottom: 5px solid var(--color-primario);
     }
 
+    .banner__acciones {
+      bottom: 10px;
+      right: 10px;
+      display: flex;
+    }
 
-    .banner__btn {
+    .banner__seguir {
       right: 10px;
       top: 20px;
       font-weight: 700;
@@ -63,6 +83,7 @@
       }
     }
 
+
     &::after {
       content: '';
       position: absolute;
@@ -72,20 +93,10 @@
       height: 100%;
       z-index: 1;
       border-radius: 9px;
-      background: linear-gradient(to bottom, #240b36d8, #c3143200);
+      background: linear-gradient(to right, #240b36d8, #c3143200);
     }
   }
 
-  @media(min-width:1600px) {
-
-    .banner {
-
-      .banner__img {
-        height: 220px;
-      }
-    }
-
-  }
 
   @media(max-width:650px) {
 
@@ -99,7 +110,7 @@
         font-size: 1.5em;
       }
 
-      .banner__btn {
+      .banner__seguir {
         font-size: 0.85rem;
         top: unset;
         bottom: 10px;
