@@ -12,7 +12,7 @@ export default createStore({
   mutations: {
     OBTENER_ARTISTA(state, artista) {
       state.artista = artista
-      state.reproductorPerfilArtista = { ...artista.albumes[0], nombre: artista.nombre_artista } 
+      state.reproductorPerfilArtista = { ...artista.albumes[0], nombre: artista.nombre } 
     },
     OBTENER_ARTISTAS(state, artistas) {
       state.artistas = artistas
@@ -21,7 +21,6 @@ export default createStore({
       state.reproductorPerfilArtista = album
     },
     SELECCIONAR_CANCION_ACTUAL(state, cancionActual) {
-      console.log(cancionActual)
       state.cancionActualReproductor =  cancionActual
     }
   },
