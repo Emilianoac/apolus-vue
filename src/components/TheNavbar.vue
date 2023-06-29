@@ -1,27 +1,12 @@
 <template>
-  <nav class="menu-principal navbar navbar-expand-lg shadow">
+  <nav class="menu-principal navbar navbar-expand-lg">
     <div class="container-fluid">
       <router-link to="/" class="navbar-brand"><BaseLogotipoSitio/></router-link>
-      <button 
-        class="navbar-toggler" 
-        @click="toggleOffCanvas" 
-        type="button"
-        data-bs-target="#navbarSupportedContent"
-        aria-expanded="false" 
-        aria-controls="navbarSupportedContent" 
-        aria-label="Toggle navigation">
-          <span> Menú <fa icon="bars"/></span>
+      <button class="navbar-toggler" type="button" @click="offCanvasMenu = !offCanvasMenu">
+        <span> Menú <fa icon="bars"/></span>
       </button>
 
-      <div class="menu_principal__overlay" @click="toggleOffCanvas" ref="overlay"></div>
-
-      <div class="menu-principal__container navbar-collapse ml-xl-4 ms-0" ref="menu">
-        <button class="btn btn_cerrar d-block d-lg-none" @click="toggleOffCanvas">
-          <fa icon="times" />
-        </button>
-        <router-link to="/" class="navbar-brand text-center d-block d-lg-none mx-auto mt-3">
-          <BaseLogotipoSitio />
-        </router-link>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <BaseBuscador />
         <ul class="navbar-nav ms-auto">
           <li class="nav-item me-3 order-1 order-lg-0 mt-2 mt-lg-0">
@@ -53,14 +38,52 @@
         </ul>
       </div>
     </div>
-    <div class="container-fluid d-block d-lg-none py-2">
+<!--     <div class="container-fluid d-block d-lg-none py-2">
       <BaseBuscador />
-    </div>
+    </div> -->
   </nav>
 
   <Teleport to="body">
     <ModalRegistro/>
     <ModalLogin/>
+
+    <aside class="offcanvas-movil" :class="{'show': offCanvasMenu }">
+      <button class="btn btn_cerrar d-block" @click="offCanvasMenu = !offCanvasMenu">
+        <fa icon="times" />
+      </button>
+      <router-link to="/" class="navbar-brand text-center d-block d-lg-none mx-auto mt-3">
+        <BaseLogotipoSitio />
+      </router-link>
+      <BaseBuscador />
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item me-3 order-1 order-lg-0 mt-2 mt-lg-0">
+          <a 
+            class="nav-link" 
+            aria-current="page" 
+            data-bs-toggle="modal" 
+            data-bs-target="#modalLogin"
+            href="#!">
+            Iniciar sesión
+          </a>
+        </li>
+        <li class="nav-item">
+          <a 
+            class="btn btn-primary text-white px-3" 
+            aria-current="page" 
+            data-bs-toggle="modal"
+            data-bs-target="#modalRegistro" 
+            href="#!">
+            Crear una cuenta
+          </a>
+        </li>
+        <li class="nav-item d-flex align-items-center pe-0 px-lg-3 px-0">
+          <label class="switch" for="switchColor" title="Cambiar modo de color" tabindex="0">
+            <input class="switch__input" v-model="modoClaro" id="switchColor" type="checkbox" />
+            <span class="switch__slider"></span>
+          </label>
+        </li>
+      </ul>
+    </aside>
   </Teleport>
 </template>
 
@@ -75,6 +98,7 @@
   const modoClaro = ref(localStorage.modoCLaro)
   const menu = ref(null)
   const overlay = ref(null)
+  const offCanvasMenu = ref(false)
 
   function toggleOffCanvas() {
     menu.value.classList.toggle('desplegar')
@@ -115,9 +139,10 @@
 
 <style lang="scss">
 
-  .menu-principal {
+  nav.menu-principal {
     display: block;
-    position: fixed;
+    position: sticky;
+    top: 0;
     width: 100%;
     grid-row: 1/2;
     grid-column: 1/4;
@@ -223,6 +248,23 @@
     }
   }
 
+  .offcanvas-movil {
+    position: fixed;
+    right: 0;
+    top: 0;
+    width: 100%;
+    max-width: 90%;
+    background: var(--bg-color-claro);
+    z-index: 99;
+    height: 100vh;
+    padding: 1em;
+    transform: translateX(110%);
+  }
+
+  .offcanvas-movil.show {
+    transform: translateX(0);
+  }
+
   @media(max-width:991px) {
 
     .menu-principal {
@@ -238,32 +280,6 @@
         font-size: 0.84rem;
         padding: 0.4rem;
       }
-    }
-
-    .menu-principal__container {
-      position: absolute;
-      width: 100%;
-      max-width: 300px;
-      height: 100vh;
-      top: 0;
-      right: 0;
-      padding: 1em;
-      transform: translateX(100vh);
-      background-color: var(--bg-color-oscuro);
-      transition: transform 0.5s cubic-bezier(0.215, 0.610, 0.355, 1);
-      z-index: 99;
-
-      .navbar-nav {
-        padding-top: 1em;
-        display: grid;
-
-        .nav-item:last-of-type {
-          position: absolute;
-          top: 20px;
-          right: 20px;
-        }
-      }
-
     }
 
     .menu-principal__container.desplegar {
