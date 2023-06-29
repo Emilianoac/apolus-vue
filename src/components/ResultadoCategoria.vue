@@ -1,14 +1,15 @@
 <template>
   <section class="categoria mt-4">
-    <h2 class="titulo-categoria mb-0 mb-lg-4">{{ this.titulo }}</h2>
+    <h2 class="titulo-categoria mb-4">{{ this.titulo }}</h2>
     <swiper-container
       class="pb-2"
-      :slides-per-view="4"      
+      :slides-per-view="5"  
+      :breakpoints="breakpoints"    
       :space-between="20">
         <swiper-slide v-for="artista in artistas" :key="artista.id">
           <ResultadoCategoriaTarjeta
-            :nombre="artista.nombre_artista" 
-            :miniatura="artista.banner" 
+            :nombre="artista.nombre" 
+            :miniatura="artista.banner.data.url" 
             :slug="artista.slug" 
           />
         </swiper-slide>
@@ -25,6 +26,21 @@
     artistas: Array,
     titulo: String
   })
+
+  const breakpoints = {
+    330: {
+      slidesPerView: 2,
+    },
+    570: {
+      slidesPerView: 3
+    },
+    990: {
+      slidesPerView: 4
+    },
+    1200: {
+      slidesPerView: 5
+    }
+  }
 </script>
 
 <style lang="scss">

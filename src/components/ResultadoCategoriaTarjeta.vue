@@ -1,6 +1,6 @@
 <template>
   <article class="card">
-    <router-link class="card__link" :to="slug">
+    <router-link class="card__link" :to="`artista/${slug}`">
       <div class="card__row">
         <img class="card__img" :src="miniatura" alt="" load="lazy" />
       </div>
