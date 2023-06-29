@@ -76,10 +76,10 @@
 
 <script setup>
   import {reactive} from "vue"
-  import {apolusFirebase} from "../firebase/config"
+  import {apolusFirebase} from "../../firebase/config"
   import {addDoc, collection } from "firebase/firestore"
   import { getStorage, ref as firebaseRef, uploadBytes, getMetadata, getDownloadURL } from "firebase/storage";
-  import {filePreviewFromInput} from "../composables/filePreview"
+  import {filePreviewFromInput} from "../../composables/filePreview"
 
   const artista = reactive({
     nombre: null,

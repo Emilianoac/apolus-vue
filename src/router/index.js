@@ -1,7 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import Home from '../views/Home.vue'
-import PerfilArtista from '../views/PerfilArtista.vue'
-import Buscar from '../views/Buscar.vue'
 
 const routes = [
   {
@@ -10,28 +8,34 @@ const routes = [
     component: Home
   },
   {
-    path: '/:slug',
+    path: '/artista/:slug',
     name: 'PerfilArtista',
-    component: PerfilArtista,
+    component: () => import('../views/perfil-artista/_PerfilArtista.vue'),
     props: true,
     meta: {
       title: null ,
       page: 'event',
     }
   },
-  {
-    path: '/buscar',
-    name: 'Buscar',
-    component: Buscar
-  },
 
+  // Backoffice
+  {
+    path: '/listado-artistas',
+    name: 'ListadoArtistas',
+    component: () => import('../views/backoffice/ListadoArtistas.vue'),
+  },
   {
     path: '/anadir-artista',
     name: 'Añadir artista',
-    component: () => import('../views/AnadirArtista.vue'),
-  }
+    component: () => import('../views/backoffice/AnadirArtista.vue'),
+  },
+  {
+    path: '/editar-artista/:id',
+    name: 'EditarArtista',
+    props: true,
+    component: () => import('../views/backoffice/EditarArtista.vue'),
+  },
 ]
-
 
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
