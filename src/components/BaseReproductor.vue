@@ -1,16 +1,16 @@
 <template>
   <div v-if="cancionActual" class="reproductor" :class="{ reproductor_expandido: reproductorExpandido }">
-    <div class="row align-items-center p-3">
+    <div class="row align-items-center p-2 p-lg-3">
       <div class="col-md-4 col-9">
         <div class="reproductor__informacion">
           <fa v-if="reproductorExpandido" @click="minimizarReproductor" class="mb-3" icon="chevron-down" />
-          <img class="reproductor__miniatura img-fluid" @click="expandirReproductor" :src="cancionActual.cover_cancion" />
+          <img class="reproductor__miniatura img-fluid" @click="expandirReproductor" :src="cancionActual.cover" />
           <div class="reproductor__row">
-            <p class="reproductor__titulo-cancion">
-              {{ cancionActual.nombre_cancion }}
+            <p class="reproductor__titulo-cancion" :title="cancionActual.nombre">
+              {{ cancionActual.nombre}}
             </p>
             <span class="reproductor__artista">
-              {{ cancionActual.interprete_cancion }}
+              {{ cancionActual.interprete }}
             </span>
           </div>
           <BaseBotonFavorito />
@@ -28,12 +28,12 @@
         </div>
       </div>
       <div class="col-md-4">
-        <div class="reproductor__controles-secundarios">
+        <div class="reproductor__controles-secundarios"> 
           <div class="reproductor__barra-progreso"></div>
           <div class="reproductor__duracion">
             <div class="duracion__inicio">0:00</div>
             <div class="duracion__separador">/</div>
-            <div class="duracion__final">{{ cancionActual.duracion_cancion }}</div>
+            <div class="duracion__final">{{ cancionActual.duracion }}</div>
           </div>
           <button class="reproductor__volumen">
             <fa icon="volume-up" />
@@ -56,6 +56,8 @@
   const reproductorExpandido = ref(false)
   const cancionActual = computed(() => store.state.cancionActualReproductor)
 
+  console.log(cancionActual.value)
+
   const expandirReproductor = () => {
     if (cancionActual.value && window.matchMedia("(max-width: 772px)").matches) {
       reproductorExpandido.value = true
@@ -70,8 +72,9 @@
 </script>
 
 <style lang="scss">
+
   .reproductor {
-    box-shadow: -8px 0px 9px rgba(0, 0, 0, 0.199);
+    //box-shadow: -8px 0px 9px rgba(0, 0, 0, 0.199);
     background-color: var(--bg-color-oscuro);
     color: var(--text-color);
 
@@ -93,6 +96,10 @@
           font-size: 0.90em;
           font-weight: 700;
           margin-bottom: 0;
+          max-width: 120px;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
         }
 
         .reproductor__artista {
@@ -152,7 +159,7 @@
   @media(max-width:772px) {
 
     .reproductor {
-      height: 75px;
+      //height: 75px;
       position: relative;
       bottom: 0;
       transition: height 0.6s ease-in-out;
