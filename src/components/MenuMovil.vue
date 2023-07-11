@@ -1,15 +1,15 @@
 <template>
   <ul class="menu-movil d-lg-none px-3">
     <li class="text-center">
-      <router-link class="menu-movil__link" to="/"><fa icon="home" /></router-link>
+      <router-link class="menu-movil__link" to="/"><fa icon="home"/></router-link>
       <span class="d-block small">Inicio</span>
     </li>
     <li class="text-center">
-      <router-link class="menu-movil__link" to="/favoritas"><fa icon="search" /></router-link>
-      <span class="d-block small">Buscar</span>
+      <router-link class="menu-movil__link" to="/favoritas"><fa icon="globe" /></router-link>
+      <span class="d-block small">Explorar</span>
     </li>
     <li class="text-center">
-      <button class="menu-movil__link" aria-current="page" data-bs-toggle="modal" data-bs-target="#ajustes">
+      <button class="menu-movil__link">
         <fa icon="user" />
       </button>
       <span class="d-block small">Mi cuenta</span>

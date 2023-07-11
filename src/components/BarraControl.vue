@@ -6,8 +6,8 @@
 </template>
 
 <script setup>
-  import Reproductor from './BaseReproductor.vue'
-  import MenuMovil from './TheMenuMovil.vue'
+  import Reproductor from './Reproductor.vue'
+  import MenuMovil from './MenuMovil.vue'
 </script>
 
 <style lang="scss">
