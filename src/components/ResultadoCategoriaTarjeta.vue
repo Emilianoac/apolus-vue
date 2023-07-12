@@ -6,13 +6,10 @@
       </div>
       <p class="card__titulo">{{ nombre }}</p>
     </router-link>
-    <BaseBotonPlay />
   </article>
 </template>
 
 <script setup>
-  import BaseBotonPlay from "./BaseBotonPlay.vue"
-
   const props = defineProps({
     nombre: String,
     miniatura: String,
@@ -21,6 +18,7 @@
 </script>
 
 <style lang="scss">
+
   .card {
     position: relative;
     padding-bottom: 1em;
@@ -64,13 +62,6 @@
       padding-top: 0.5em;
       font-size: 0.85em;
       opacity: 0.6;
-    }
-
-    .boton_play {
-      position: absolute;
-      right: 10px;
-      top: 10px;
-      font-size: 2.5rem;
     }
 
     &:hover {
