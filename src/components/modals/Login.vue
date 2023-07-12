@@ -23,8 +23,19 @@
                 <label class="form-label">Contraseña</label>
                 <input type="password" placeholder="Contraseña" class="form-control">
               </div>
-              <button type="submit" class="btn btn-primary w-100 mt-4">Iniciar Sesión</button>
+              <button class="btn btn-primary w-100 mt-4" type="submit" @click.prevent="">Iniciar Sesión</button>
             </form>
+            <div class="d-flex align-items-center">
+              <hr class="w-100"><span class="d-block mx-2">o</span><hr class="w-100">
+            </div>
+            <a 
+              class="link-registro d-block text-center"
+              href="#!"
+              aria-current="page" 
+              data-bs-toggle="modal"
+              data-bs-target="#modalRegistro">
+              Registrarse
+            </a>
           </div>
         </div>
       </div>
@@ -32,7 +43,7 @@
 </template>
 
 <script setup>
-  import BaseLogotipoSitio from '../BaseLogotipoSitio.vue';
+  import BaseLogotipoSitio from "../BaseLogotipoSitio.vue"
 </script>
 
 <style lang="scss">

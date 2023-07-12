@@ -27,7 +27,7 @@
                 <label class="form-label"> Repetir Contraseña</label>
                 <input type="password" placeholder="Repetir Contraseña" class="form-control">
               </div>
-              <button type="submit" class="btn btn-primary w-100 mt-4">Registrarse</button>
+              <button class="btn btn-primary w-100 mt-4" type="submit" @click.prevent="">Registrarse</button>
             </form>
           </div>
         </div>
