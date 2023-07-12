@@ -1,16 +1,16 @@
 <template>
-  <div class="main-perfil-artista" v-if="artista">
+  <div class="main-perfil-artista" v-if="artista.data">
     <div class="row" >
       <div class="col-xl-7 mb-2">
         <!-- BANNER -->
-        <Banner :nombre="artista.nombre" :banner="artista.banner.data.url"/>
+        <Banner :nombre="artista.data.nombre" :banner="artista.data.banner.data.url"/>
         <h2 class="titulo-categoria mt-5"> Álbumes </h2>
         <!-- ALBUMES -->
-        <Albumes :albumes="artista.albumes"/>
+        <Albumes :albumes="artista.data.albumes"/>
       </div>
       <!-- REPRODUCTOR PERFIL -->
       <div class="col-xl-5">
-        <ListadoCanciones :album="artista.albumes[0]" :artista="artista.nombre"/>
+        <ListadoCanciones :album="artista.data.albumes[0]" :artista="artista.data.nombre"/>
       </div>
     </div>
     <div class="row mt-4">
@@ -19,18 +19,22 @@
         <div class="biografia">
           <div class="biografia__texto">
             <h2 class="titulo-categoria">Acerca de</h2>
-            <p>{{ artista.biografia }}</p>
+            <p>{{ artista.data.biografia }}</p>
           </div>
-          <div class="biografia__imagen w-100" :style="`background-image: url(${artista.banner.data.url})`"></div>
+          <div class="biografia__imagen w-100" :style="`background-image: url(${artista.data.banner.data.url})`"></div>
         </div>
       </div>
     </div>
   </div>
-  <TheLoader v-else/>
+  <div class="no-econtrado" v-if="artista.error">
+    <h1 class="text-center">Artista no encontrado</h1>
+    <fa :icon="['fas', 'compact-disc']"/>
+  </div>
+  <TheLoader v-if="!artista.error && !artista.data"/>
 </template>
 
 <script setup>
-  import {ref, watch} from "vue"
+  import {ref, watch, reactive} from "vue"
   import {useStore} from "vuex"
   import {useRoute, onBeforeRouteUpdate} from "vue-router"
 
@@ -45,11 +49,19 @@
 
   const store = useStore()
   const route = useRoute()
-  const artista = ref(false)
+  const artista = reactive({
+    data: false,
+    error: false
+  })
 
   store.dispatch("obtenerArtista", route.params.slug)
   watch(() => store.state.artista, (value) => {
-    artista.value = value
+    artista.data = value
+    artista.error = store.state.error
+  })
+
+  watch(() => store.state.error, (value) => {
+    artista.error = value
   })
 
   onBeforeRouteUpdate((to, from, next) => {
@@ -78,6 +90,18 @@
         padding: 1.4em;
         background-color: var(--bg-color-oscuro);
       }
+    }
+  }
+
+  .no-econtrado {
+    text-align: center;
+    
+    h1 {
+      font-weight: 700;
+    }
+
+    svg {
+      font-size: 3em;
     }
   }
 

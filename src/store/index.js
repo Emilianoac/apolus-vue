@@ -1,12 +1,14 @@
-import { createStore } from 'vuex'
-import { apolusFirebase } from '../firebase/config'
+import { createStore } from "vuex"
+import { db } from "../firebase/config"
+import { collection, getDocs, query, where } from "firebase/firestore"
+
 
 export default createStore({
   state: {
     artista : null,
     artistas : [],
     cancionActualReproductor: null,
-    error : null,
+    error : false,
     reproductorPerfilArtista : null
   },
   mutations: {
@@ -27,22 +29,28 @@ export default createStore({
   actions: {
     async obtenerArtista({commit, state}, slug) {
       try {
-          let res = await apolusFirebase.collection('artistas').where('slug', '==', slug).get()
-  
-          if (!res.empty) {
-            const snapshot = res.docs[0]
-            const data = snapshot.data()
-            commit('OBTENER_ARTISTA', { ...data, id: res.id })
-          } else throw Error('That post does not exist')
+        const q = query(collection(db,"artistas"),where("slug", "==", slug))
+        const querySnapshot = await getDocs(q)
+
+        if (!querySnapshot.empty) {
+          querySnapshot.forEach((doc) => {
+            let data = doc.data()
+            data.id = doc.id
+            commit('OBTENER_ARTISTA', data)
+          })
+          state.error = false
+        } else {
+          throw new Error('Este artista no existe')
+        }
       }
       catch(err) {
-        state.error = err.message
+        console.log(err)
+        state.error = true
       }
     },
     async obtenerArtistas({commit, state}) {
       try {
-        const res = await apolusFirebase.collection('artistas').get()
-  
+        const res = await getDocs(collection(db,'artistas'))
         let resData = res.docs.map(doc => {
          return { ...doc.data(), id: doc.id }
         })
