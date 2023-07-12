@@ -1,8 +1,7 @@
 <template>
   <ul>
     <li v-for="(artista,i) in artistas">
-      <RouterLink :to="`editar-artista/${artista.id}`">{{  artista.id }}</RouterLink>
-      
+      <RouterLink :to="`editar-artista/${artista.id}`">{{ artista.nombre }}</RouterLink>
     </li>
   </ul>
 </template>

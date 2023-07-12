@@ -12,7 +12,7 @@ export default createStore({
   mutations: {
     OBTENER_ARTISTA(state, artista) {
       state.artista = artista
-      state.reproductorPerfilArtista = { ...artista.albumes[0], nombre: artista.nombre } 
+      state.reproductorPerfilArtista = { ...artista.albumes[0] } 
     },
     OBTENER_ARTISTAS(state, artistas) {
       state.artistas = artistas
@@ -41,7 +41,7 @@ export default createStore({
     },
     async obtenerArtistas({commit, state}) {
       try {
-        const res = await apolusFirebase.collection('artistas').limit(5).get()
+        const res = await apolusFirebase.collection('artistas').get()
   
         let resData = res.docs.map(doc => {
          return { ...doc.data(), id: doc.id }

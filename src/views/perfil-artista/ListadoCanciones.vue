@@ -1,17 +1,15 @@
 <template>
-  
+  <!-- ALBUM ACTUAL -->
   <div class="reproductor-album">
     <div class="reproductor-album__miniatura">
-      <img class="img-fluid" :src="album.cover.data.url" alt="" />
+      <img class="img-fluid" :src="album.cover.data.url"/>
     </div>
     <div class="album-datos">
-      <p class="album-datos__titulo"> {{ album.nombre }} </p>
-      <span class="album-datos__lanzamiento"> {{ album.fecha_lanzamiento }} </span>
+      <p class="album-datos__titulo">{{ album.nombre }}</p>
+      <span class="album-datos__lanzamiento">{{ album.fecha_lanzamiento }}</span>
     </div>
-    <BotonPlay/>
   </div>
-
-  <h2 v-show="seccion == 'busqueda'" class="titulo-categoria titulo-categoria_lista-canciones"> {{ titulo }}</h2>
+  <!-- LISTADO CANCIONES -->
   <div class="lista-canciones mt-2">
     <ul class="lista-canciones__contenido">
       <li class="lista-header">
@@ -20,34 +18,43 @@
         <div class="lista-header__duracion">Duración</div>
         <div class="lista-header__favorito"></div>
       </li>
-      <!-- CANCIONES -->
       <li class="cancion" v-for="(cancion, i) in album.canciones">
         <div class="cancion__container-cover" @click="seleccionarCancion(cancion)">
-          <fa icon="play" class="icono-play" />
-            <img class="cancion__cover img-fluid" :src="album.cover.data.url" />
+          <!-- BOTON PLAY MOVIL -->
+          <fa icon="play" class="icono-play"/> 
+          <!-- COVER -->
+          <img class="cancion__cover img-fluid" :src="album.cover.data.url"/>
        </div>
+       <!-- POSICION -->
         <div class="cancion__posicion">
-          {{ i + 1 }} <BotonPlay @click="seleccionarCancion(cancion)"/>
+          {{ i + 1 }} 
+          <!-- BOTON PLAY DESKTOP -->
+          <BotonPlay @click="seleccionarCancion(cancion)"/>
         </div>
-        <div class="cancion__titulo"> {{ cancion.nombre }} </div>
-        <div class="cancion__duracion"> {{ cancion.duracion }} </div>
+        <div class="cancion__titulo"> 
+          <!-- TITULO  -->
+          <span> {{ cancion.nombre }}</span>
+          <!-- INTERPRETES -->
+          <span class="small d-block cancion__interprete">{{ cancion.interprete }}</span>
+        </div>
+        <!-- DURACIÓN-->
+        <div class="cancion__duracion"> {{ cancion.duracion }}</div>
+        <!-- BOTON FAVORITO -->
         <BotonFavorito />
       </li>
     </ul>
   </div>
-  <hr v-show="seccion == 'busqueda'" class="separador">
 </template>
 
 <script setup>
   import { useStore } from "vuex"
-  import { computed, ref } from "vue"
+  import { computed } from "vue"
 
   import BotonFavorito from "../../components/BaseBotonFavorito.vue"
   import BotonPlay from "../../components/BaseBotonPlay.vue"
 
   const props = defineProps({
     artista: String,
-    //album: Array,
     seccion: String,
     titulo: String,
   })
@@ -55,14 +62,12 @@
   const album = computed(() => store.state.reproductorPerfilArtista)
 
   function seleccionarCancion(cancion) {
-
     let cancionActual = {
       nombre: cancion.nombre,
-      interprete: album.value.nombre,
+      interprete: cancion.interprete,
       duracion: cancion.duracion,
       cover: album.value.cover.data.url
     }
-
     store.commit("SELECCIONAR_CANCION_ACTUAL", cancionActual)
   }
 
@@ -70,7 +75,7 @@
 
 <style lang="scss">
 
-.reproductor-album {
+  .reproductor-album {
     display: grid;
     align-items: center;
     grid-column-gap: 10px;
@@ -129,7 +134,7 @@
     background-color: var(--bg-color-oscuro);
 
     .lista-canciones__contenido {
-      max-height: 345px;
+      max-height: 367px;
       overflow-y: auto;
       list-style-type: none;
       padding: 0em;
@@ -190,12 +195,16 @@
       }
     }
 
-
-    .cancion__titulo,
-    .cancion__artista {
-      white-space: nowrap;
-      text-overflow: ellipsis;
+    .cancion__titulo span,
+    .cancion__interprete {
+      display: -webkit-box;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: 1;
       overflow: hidden;
+    }
+
+    .cancion__interprete {
+      opacity: 0.6;
     }
 
     &:last-of-type {
@@ -209,13 +218,11 @@
         display: block;
         position: absolute;
         left: 4px;
-        top: 0;
-        transform: translate(-0%, -0%);
+        top: 50%;
+        transform: translate(0%, -50%);
         font-size: 2em;
       }
     }
-
-
   }
 
   @media(max-width:650px) {

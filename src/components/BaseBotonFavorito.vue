@@ -1,6 +1,11 @@
 <template>
-  <button class="boton boton_favorito">
-    <fa icon="heart" />
+  <button 
+    class="boton boton_favorito"
+    aria-current="page" 
+    data-bs-toggle="modal"
+    data-bs-target="#modalLogin"
+    title="Añadir a favoritos">
+      <fa :icon="['far', 'heart']" />
   </button>
 </template>
 

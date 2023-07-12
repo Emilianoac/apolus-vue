@@ -5,6 +5,7 @@
 </template>
 
 <style lang="scss">
+
   .boton_play {
     position: relative;
     display: inline-flex;

@@ -6,9 +6,13 @@
       <p class="banner__oyentes mt-2">19.359 Oyentes mensuales</p>
     </div>
     <div class="banner__acciones">
-      <button class="banner__seguir btn bg-light ms-2">
-        <span>Seguir</span>
-        <fa icon="plus" />
+      <button 
+        class="banner__seguir btn bg-light ms-2"
+        aria-current="page" 
+        data-bs-toggle="modal"
+        data-bs-target="#modalLogin">
+          <span class="me-1">Seguir</span>
+          <fa icon="plus" />
       </button>
     </div>
   </div>
@@ -50,7 +54,6 @@
       }
     }
     
-
     .banner__titulo {
       font-size: 2.4em;
       font-weight: 700;
@@ -81,8 +84,11 @@
       svg {
         color: var(--color-primario);
       }
-    }
 
+      &:hover {
+        opacity: 0.9;
+      }
+    }
 
     &::after {
       content: '';
@@ -96,7 +102,6 @@
       background: linear-gradient(to right, #240b36d8, #c3143200);
     }
   }
-
 
   @media(max-width:650px) {
 
