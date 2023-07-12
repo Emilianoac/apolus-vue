@@ -10,12 +10,13 @@
 </template>
 
 <script setup >
-  import Navbar from '../components/TheNavbar.vue'
+  import Navbar from '../components/Navbar.vue'
   import BarraControl from '../components/BarraControl.vue'
 </script>
 
 
 <style lang="scss">
+
 
   .main-container {
     height: 100%;
