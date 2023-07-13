@@ -1,10 +1,9 @@
 <template>
   <section class="albumes">
-    <swiper-container
-      init="false"
+    <swiper
       class="carrusel"
       :slides-per-view="4" 
-      navigation="true"
+      navigation
       :breakpoints="breakpoints"    
       :space-between="20">
         <swiper-slide v-for="(album, i) in albumes" :key="album">
@@ -20,13 +19,18 @@
               </figcaption>
           </figure>
         </swiper-slide>
-    </swiper-container>
+    </swiper>
   </section>
 </template>
 
 <script setup>
   import { useStore } from "vuex"
   import { ref, onBeforeUpdate, onMounted} from "vue"
+  import { Swiper, SwiperSlide } from "swiper/vue"
+  import SwiperCore, { Navigation } from "swiper"
+  import "swiper/swiper-bundle.min.css"
+
+  SwiperCore.use([Navigation])
 
   const props = defineProps({
     albumes: Array,
@@ -49,52 +53,10 @@
     }
   }
 
-  onMounted(() => {
-    const carrusel = document.querySelector('swiper-container')
-    const styles = {
-      injectStyles : [
-        `
-        .swiper-button-next , .swiper-button-prev {
-          background-color: var(--color-secundario);
-          border-radius: 50%;
-          width: 30px;
-          height: 30px;
-          border: 1px solid white;
-        }
-
-        .swiper-button-next svg , .swiper-button-prev svg {
-          width: 13px;
-          height: 13px;
-          color: white;
-        }
-        `,
-      ],
-    }
-  
-    Object.assign(carrusel, styles)
-    carrusel.initialize()
-  })
-  
   function seleccionarAlbum(album, i) {
     store.commit('SELECCIONAR_ALBUM', album)
     albumSeleccionado.value = i
   }
-
-  onBeforeUpdate(() => {
-    let slide = document.querySelector("swiper-container")
-    let items 
-
-    if (window.matchMedia("(max-width: 569px)").matches) {
-      items = 2
-    } else if (window.matchMedia("(max-width: 759px)").matches) {
-      items = 3
-    } else if (window.matchMedia("(max-width: 1199px)").matches) {
-      items = 4
-    } else {
-      items = 4
-    }
-    setTimeout(() => slide.setAttribute("slides-per-view", items), 90)
-  })
 </script>
 
 <style lang="scss">

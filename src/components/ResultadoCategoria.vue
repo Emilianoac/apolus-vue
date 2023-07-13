@@ -1,14 +1,14 @@
 <template>
   <section class="categoria mt-4">
-    <h2 class="titulo-categoria mb-4">{{ this.titulo }}</h2>
+    <h2 class="titulo-categoria mb-4">{{ titulo }}</h2>
     <Skeleton v-if="artistas.length == 0" width="100%" height="180px"/>
-    <swiper-container
+    <Swiper
+      v-else
       :id="`carrusel_categoria_${titulo.split(' ').join('-').toLowerCase()}`"
-      init="false"
-      class="pb-2"
+      class="pb-2 carrusel-artistas"
       :slides-per-view="5" 
-      navigation="true"
-      :breakpoints="breakpoints"    
+      navigation
+      :breakpoints="breakpoints" 
       :space-between="20">
         <swiper-slide v-for="artista in artistas" :key="artista.id">
           <ResultadoCategoriaTarjeta
@@ -17,15 +17,20 @@
             :slug="artista.slug" 
           />
         </swiper-slide>
-    </swiper-container>
+    </Swiper>
   </section>
 </template>
 
 <script setup>
   import { onMounted } from "vue"
+  import { Swiper, SwiperSlide } from "swiper/vue"
+  import SwiperCore, { Navigation } from "swiper"
+  import "swiper/swiper-bundle.min.css"
 
   import ResultadoCategoriaTarjeta from "./ResultadoCategoriaTarjeta.vue"
   import Skeleton  from "../components/Skeleton.vue"
+
+  SwiperCore.use([Navigation])
 
   const props = defineProps({
     artistas: Array,
@@ -47,32 +52,12 @@
   }
 
   onMounted(() => {
-    const carrusel = document.querySelector(`#carrusel_categoria_${props.titulo.split(' ').join('-').toLowerCase()}`)    
-    const styles = {
-      injectStyles : [
-        `
-        .swiper-button-next , .swiper-button-prev {
-          background-color: var(--color-secundario);
-          border-radius: 50%;
-          width: 30px;
-          height: 30px;
-          border: 1px solid white;
-        }
-        .swiper-button-next svg , .swiper-button-prev svg {
-          width: 13px;
-          height: 13px;
-          color: white;
-        }
-        `,
-      ],
-    }
-  
-    Object.assign(carrusel, styles)
-    carrusel.initialize()
+
   })
 </script>
 
 <style lang="scss">
+
   .categoria {
     padding-bottom: 2em;
     border-bottom: 1px solid var(--border-color);
