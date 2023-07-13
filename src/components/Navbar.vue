@@ -115,6 +115,9 @@
   import ModalLogin         from "./modals/Login.vue"
   import Overlay           from "../components/Overlay.vue"
 
+  import iconoLuna from "../assets/icons/moon.svg"
+  import iconoSol from "../assets/icons/sun.svg"
+
   const modoClaro = ref(localStorage.modoCLaro)
   const offCanvasMenu = ref(false)
 
@@ -150,6 +153,10 @@
   }
 
   onMounted(() => {
+    let $root = document.documentElement
+    $root.style.setProperty('--icon-dark', `url('${iconoLuna}')`)
+    $root.style.setProperty('--icon-light', `url('${iconoSol}')`)
+
     establecerModoColor()
   })
 </script>
@@ -282,13 +289,13 @@
 
       &::before {
         content: "";
-        background-image: url("/img/moon.svg");
+        background-image: var(--icon-dark);
         filter: invert(1);
       }
 
       &::after {
         content: "";
-        background-image: url("/img/sun.svg");
+        background-image: var(--icon-light);
         transform: translateX(-26px);
         z-index: 4;
       }
