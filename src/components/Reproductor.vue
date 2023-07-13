@@ -1,8 +1,12 @@
 <template>
   <div 
     class="reproductor" 
-    v-if="cancionActual" 
+    v-show="cancionActual" 
     :class="{ reproductor_expandido: reproductorExpandido }">
+      <audio id="cancionReproductor" src="/track1.mp3" hidden></audio>
+      <div class="barra-progreso-container">
+        <div class="barra-progreso-desktop" :style="`width: ${store.state.reproductor.porcentajeBarra}%`"></div>
+      </div>
       <div class="row align-items-center p-2 p-lg-3">
         <div class="col-md-4 col-9">
           <div class="reproductor__informacion">
@@ -34,7 +38,7 @@
             <button class="control control_retroceder">
               <fa icon="backward" />
             </button>
-            <BaseBotonPlay />
+            <BaseBotonPlay :duracion="cancionActual.duracion" />
             <button class="control control_avanzar">
               <fa icon="forward" />
             </button>
@@ -48,9 +52,14 @@
               <div class="duracion__separador">/</div>
               <div class="duracion__final">{{ cancionActual.duracion }}</div>
             </div>
-            <button class="reproductor__volumen">
-              <fa icon="volume-up" />
-            </button>
+            <!-- VOLUMEN -->
+            <div class="reproductor__volumen">
+              <button class="volumen__btn me-2" @click.prevent="handleVolume">
+                <fa class="volumen__icono" icon="volume-up" v-if="volumen.level != 0"/>
+                <fa class="volumen__icono" icon="volume-off" v-else />
+              </button>
+              <input class="volumen__control" type="range" min="0" max="1" v-model="volumen.level" step="0.1">
+            </div>
           </div>
         </div>
       </div>
@@ -59,7 +68,7 @@
 
 <script setup>
   import { useStore } from "vuex"
-  import { computed, ref } from "vue"
+  import { computed, ref, reactive, watch } from "vue"
 
   import BaseBotonFavorito from "./BaseBotonFavorito.vue"
   import BaseBotonPlay from "./BaseBotonPlay.vue"
@@ -67,17 +76,26 @@
   const store = useStore()
   const reproductorExpandido = ref(false)
   const cancionActual = computed(() => store.state.cancionActualReproductor)
+  const volumen = reactive({
+    level: 0.5,
+  })
 
-  const expandirReproductor = () => {
+  function expandirReproductor() {
     reproductorExpandido.value = true
     document.body.style.overflow = "hidden"
-
   }
 
-  const minimizarReproductor = () => {
+  function minimizarReproductor() {
     reproductorExpandido.value = false
     document.body.style.overflow = "unset"
   }
+
+  watch(() => volumen.level, val => {
+    let audio = document.querySelector("#cancionReproductor")
+    audio.volume = Number(val) 
+
+  }, {deep: true})
+
 </script>
 
 <style lang="scss">
@@ -86,6 +104,18 @@
     //box-shadow: -8px 0px 9px rgba(0, 0, 0, 0.199);
     background-color: var(--bg-color-oscuro);
     color: var(--text-color);
+    
+    .barra-progreso-container {
+      width: 100%;
+      height: 4px;
+      background-color: gray;
+    }
+
+    .barra-progreso-desktop {
+      height: 4px;
+      background-color: var(--color-primario);
+      transition: 0.2s lin;
+    }
 
     .reproductor__informacion {
       display: grid;
@@ -162,10 +192,23 @@
       }
 
       .reproductor__volumen {
-        padding: 0;
-        border: 0;
-        background-color: transparent;
-        color: var(--text-color)
+        display: flex;
+
+        .volumen__btn {
+          padding: 0;
+          border: 0;
+          background-color: transparent;
+          color: var(--text-color);
+
+          .volumen__icono {
+            width: 20px;
+          }
+        }
+
+        .volumen__control {
+          max-width: 90px;
+        
+        }
       }
     }
   }
@@ -270,11 +313,7 @@
       }
 
       .reproductor__volumen {
-        margin: auto;
-        display: block;
-        margin-right: 0;
         margin-top: 1em;
-        color: white;
       }
     }
 

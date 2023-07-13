@@ -7,9 +7,17 @@ export default createStore({
   state: {
     artista : null,
     artistas : [],
-    cancionActualReproductor: null,
+    cancionActualReproductor: false,
     error : false,
-    reproductorPerfilArtista : null
+    reproductorPerfilArtista : null,
+
+    reproductor: {
+      porcentajeBarra: 0,
+      play: false,
+      cancion: { 
+        
+      }
+    }
   },
   mutations: {
     OBTENER_ARTISTA(state, artista) {
@@ -24,6 +32,10 @@ export default createStore({
     },
     SELECCIONAR_CANCION_ACTUAL(state, cancionActual) {
       state.cancionActualReproductor =  cancionActual
+    },
+
+    ACTUALIZAR_PORCENTAJE_BARRA(state, porcentaje) {
+      state.reproductor.porcentajeBarra = porcentaje
     }
   },
   actions: {
