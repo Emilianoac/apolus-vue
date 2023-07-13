@@ -3,7 +3,7 @@
     class="reproductor" 
     v-show="cancionActual" 
     :class="{ reproductor_expandido: reproductorExpandido }">
-      <audio id="cancionReproductor" src="/track1.mp3" hidden></audio>
+      <audio id="cancionReproductor" :src="demoSong" hidden ref="$audio"></audio>
       <div class="barra-progreso-container">
         <div class="barra-progreso-desktop" :style="`width: ${store.state.reproductor.porcentajeBarra}%`"></div>
       </div>
@@ -68,17 +68,28 @@
 
 <script setup>
   import { useStore } from "vuex"
-  import { computed, ref, reactive, watch } from "vue"
+  import { computed, ref, reactive, watch, onMounted } from "vue"
 
   import BaseBotonFavorito from "./BaseBotonFavorito.vue"
   import BaseBotonPlay from "./BaseBotonPlay.vue"
+  import demoSong from "../assets/audio/track1.mp3"
 
   const store = useStore()
   const reproductorExpandido = ref(false)
   const cancionActual = computed(() => store.state.cancionActualReproductor)
   const volumen = reactive({
-    level: 0.5,
+    level: 0.2,
   })
+  let $audio = ref(false)
+
+  onMounted(() => {
+    $audio.value.volume = 0.2
+  })
+
+  watch(() => volumen.level, val => {
+    $audio.value.volume = Number(val) 
+
+  }, {deep: true})
 
   function expandirReproductor() {
     reproductorExpandido.value = true
@@ -89,13 +100,6 @@
     reproductorExpandido.value = false
     document.body.style.overflow = "unset"
   }
-
-  watch(() => volumen.level, val => {
-    let audio = document.querySelector("#cancionReproductor")
-    audio.volume = Number(val) 
-
-  }, {deep: true})
-
 </script>
 
 <style lang="scss">
