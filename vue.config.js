@@ -1,4 +1,6 @@
 module.exports = {
+    publicPath: '/apolus-vue',
+
     pwa: {
       name: 'Apolus',
       themeColor: '#ff7033',
