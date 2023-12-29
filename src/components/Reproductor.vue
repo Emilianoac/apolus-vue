@@ -1,106 +1,109 @@
+<script setup>
+  import { useStore } from "vuex"
+  import { computed, ref } from "vue"
+
+  import BaseBotonFavorito from "./BaseBotonFavorito.vue"
+  
+  const store = useStore()
+  const reproductorMusica = ref(computed(() => store.state.reproductorMusica))
+
+  function convertirSegundosATiempo(segundos) {
+    const minutos = Math.floor(segundos / 60)
+    const segundosRestantes = segundos % 60
+
+    const segundosFormato = segundosRestantes < 10 ? '0' + segundosRestantes : segundosRestantes
+    return minutos + ":" + segundosFormato
+  }
+</script>
+
 <template>
   <div 
+    v-if="reproductorMusica.cancion.detalles"
     class="reproductor" 
-    v-show="cancionActual" 
-    :class="{ reproductor_expandido: reproductorExpandido }">
-      <audio id="cancionReproductor" :src="demoSong" hidden ref="$audio"></audio>
-      <div class="barra-progreso-container">
-        <div class="barra-progreso-desktop" :style="`width: ${store.state.reproductor.porcentajeBarra}%`"></div>
+    :class="{ reproductor_expandido: reproductorMusica.expandirReproductor }">
+      <!-- BARRA PROGRESO CANCION DESKTOP -->
+      <div class="barra-progreso-container" v-if="!reproductorMusica.expandirReproductor">
+        <div class="barra-progreso-desktop" :style="`width: ${store.state.reproductorMusica.progreso.porcentaje}%`"></div>
       </div>
       <div class="row align-items-center p-2 p-lg-3">
         <div class="col-md-4 col-9">
           <div class="reproductor__informacion">
+            <!-- BTN MINIMIZAR REPRODUCTOR-->
             <button 
                 class="boton__expandir"    
-                v-if="reproductorExpandido" 
+                v-if="reproductorMusica.expandirReproductor" 
                 title="Minimizar"
-                @click="minimizarReproductor">
-                <fa class="mb-3" icon="chevron-down"/>
+                @click="store.commit('EXPANDIR_REPRODUCTOR', false)">
+                  <fa class="mb-3" icon="chevron-down"/>
             </button>
+            <!-- IMAGEN ALBUM -->
             <img 
               class="reproductor__miniatura img-fluid" 
-              @click="expandirReproductor" 
-              :src="cancionActual.cover" 
+              :src="reproductorMusica.cancion.detalles.cover" 
+              @click="store.commit('EXPANDIR_REPRODUCTOR', true)" 
             />
             <div class="reproductor__row">
-              <p class="reproductor__titulo-cancion" :title="cancionActual.nombre">
-                {{ cancionActual.nombre}}
+              <!-- NOMBRE CANCION -->
+              <p class="reproductor__titulo-cancion" :title="reproductorMusica.cancion.nombre">
+                {{ reproductorMusica.cancion.detalles.nombre }}
               </p>
-              <span class="reproductor__artista" :title="cancionActual.interprete">
-                {{ cancionActual.interprete }}
+              <!-- NOMBRE ARTISTA -->
+              <span class="reproductor__artista" :title="reproductorMusica.cancion.interprete">
+                {{ reproductorMusica.cancion.detalles.interprete }}
               </span>
             </div>
+            <!-- BTN FAVORITO -->
             <BaseBotonFavorito />
           </div>
         </div>
         <div class="col-md-4 col-3 d-flex justify-content-center">
           <div class="reproductor__controles-reproducion">
-            <button class="control control_retroceder">
-              <fa icon="backward" />
+            <!-- CONTROL CANCION ANTERIOR-->
+            <button class="control control_retroceder"><fa icon="backward"/></button>
+            <!-- CONTROL REPRODUCIR/PAUSAR-->
+            <button 
+              class="boton boton_play" 
+              @click="store.commit('REPRODUCIR_CANCION')">
+                <fa icon="play-circle" v-if="!reproductorMusica.estado"></fa>
+                <fa icon="pause-circle" v-else></fa>
             </button>
-            <BaseBotonPlay :duracion="cancionActual.duracion" />
-            <button class="control control_avanzar">
-              <fa icon="forward" />
-            </button>
+            <!-- CONTROL CANCION SIGUIENTE-->
+            <button class="control control_avanzar"><fa icon="forward"/></button>
           </div>
         </div>
         <div class="col-md-4">
           <div class="reproductor__controles-secundarios"> 
-            <div class="reproductor__barra-progreso"></div>
+            <div class="barra-progreso-container my-2" v-if="reproductorMusica.expandirReproductor">
+              <div class="barra-progreso-desktop" :style="`width: ${store.state.reproductorMusica.progreso.porcentaje}%`"></div>
+            </div>
             <div class="reproductor__duracion">
-              <div class="duracion__inicio">0:00</div>
+              <div class="duracion__inicio">
+                {{ convertirSegundosATiempo(store.state.reproductorMusica.progreso.tiempoReproduccionActual) }}
+              </div>
               <div class="duracion__separador">/</div>
-              <div class="duracion__final">{{ cancionActual.duracion }}</div>
+              <div class="duracion__final">{{ reproductorMusica.cancion.detalles.duracion }}</div>
             </div>
             <!-- VOLUMEN -->
             <div class="reproductor__volumen">
-              <button class="volumen__btn me-2" @click.prevent="handleVolume">
-                <fa class="volumen__icono" icon="volume-up" v-if="volumen.level != 0"/>
+              <button class="volumen__btn me-2">
+                <fa class="volumen__icono" icon="volume-up" v-if="reproductorMusica.volumen != 0"/>
                 <fa class="volumen__icono" icon="volume-off" v-else />
               </button>
-              <input class="volumen__control" type="range" min="0" max="1" v-model="volumen.level" step="0.1">
+              <input 
+                class="volumen__control" 
+                v-model="reproductorMusica.volumen" 
+                @input="store.commit('ESTABLECER_VOLUMEN')"
+                type="range" 
+                min="0" 
+                max="1" 
+                step="0.1"
+              />
             </div>
           </div>
         </div>
       </div>
   </div>
 </template>
-
-<script setup>
-  import { useStore } from "vuex"
-  import { computed, ref, reactive, watch, onMounted } from "vue"
-
-  import BaseBotonFavorito from "./BaseBotonFavorito.vue"
-  import BaseBotonPlay from "./BaseBotonPlay.vue"
-  import demoSong from "../assets/audio/track1.mp3"
-
-  const store = useStore()
-  const reproductorExpandido = ref(false)
-  const cancionActual = computed(() => store.state.cancionActualReproductor)
-  const volumen = reactive({
-    level: 0.2,
-  })
-  let $audio = ref(false)
-
-  onMounted(() => {
-    $audio.value.volume = 0.2
-  })
-
-  watch(() => volumen.level, val => {
-    $audio.value.volume = Number(val) 
-
-  }, {deep: true})
-
-  function expandirReproductor() {
-    reproductorExpandido.value = true
-    document.body.style.overflow = "hidden"
-  }
-
-  function minimizarReproductor() {
-    reproductorExpandido.value = false
-    document.body.style.overflow = "unset"
-  }
-</script>
 
 <style lang="scss">
 

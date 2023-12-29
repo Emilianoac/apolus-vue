@@ -1,58 +1,5 @@
-<template>
-  <form class="buscador">
-    <div class="buscador__container input-group">
-      <input 
-        class="buscador__input form-control" 
-        @focus="buscador.activo = true"
-        v-model="buscador.busqueda"
-        type="search" 
-        placeholder="Buscar artista o canción"
-        aria-label="buscador" 
-        aria-describedby="buscador" 
-      />
-      <button class="buscador__boton input-group-text"><fa icon="search"/></button>
-    </div>
-    <div class="resultados" v-if="buscador.activo && buscador.resultados.length">
-      <ul>
-        <li class="resultado" v-for="(resultado, i) in buscador.resultados"> 
-          <RouterLink 
-            v-if="resultado.tipo == 'Artista'"
-            @click="buscador.activo = false" 
-            :to="`/artista/${resultado.data.slug}`">
-              <img class="img-fluid me-2" :src="resultado.data.banner.data.url"/>
-              <div class="w-100">
-                <p class="mb-0">{{ resultado.data.nombre }}</p>
-                <span class="small"><strong> {{ resultado.tipo }}</strong></span>
-              </div>
-          </RouterLink>
-          <button 
-            v-if="resultado.tipo == 'Cancion'"
-            @click.prevent="seleccionarCancion(resultado.data)">
-              <img class="img-fluid me-2" :src="resultado.data.cover"/>
-              <div class="w-100">
-                <p class="mb-0 mt-0" :title="resultado.data.nombre">{{ resultado.data.nombre }}</p>
-                <span class="tipo-resultado d-block"> {{ resultado.tipo }} </span>
-                <span 
-                  class="resultado__interprete small" 
-                  :title="resultado.data.interprete">
-                    {{ resultado.data.interprete }}
-                </span>
-              </div>
-            </button>
-          <div v-if="resultado.tipo == 'No resultados'">
-            <div>
-              <p class="mb-0 mt-0">{{ resultado.data.mensaje }}</p>
-            </div>
-          </div>
-        </li>
-      </ul>
-    </div>
-  </form>
-  <Overlay v-if="buscador.activo" @click="buscador.activo = false"/>
-</template>
-
 <script setup>
-  import {ref, watch, computed, reactive} from "vue"
+  import {watch, computed, reactive} from "vue"
   import {useStore} from "vuex"
 
   import Overlay from "../components/Overlay.vue"
@@ -114,10 +61,64 @@
   }, {deep: true})
 
   function seleccionarCancion(cancion) {
+    console.log(cancion)
     buscador.activo = false
-    store.commit("SELECCIONAR_CANCION_ACTUAL", cancion)
+    store.commit("REPRODUCIR_CANCION", cancion)
   }
 </script>
+
+<template>
+  <form class="buscador">
+    <div class="buscador__container input-group">
+      <input 
+        class="buscador__input form-control" 
+        @focus="buscador.activo = true"
+        v-model="buscador.busqueda"
+        type="search" 
+        placeholder="Buscar artista o canción"
+        aria-label="buscador" 
+        aria-describedby="buscador" 
+      />
+      <button class="buscador__boton input-group-text"><fa icon="search"/></button>
+    </div>
+    <div class="resultados" v-if="buscador.activo && buscador.resultados.length">
+      <ul>
+        <li class="resultado" v-for="(resultado, i) in buscador.resultados"> 
+          <RouterLink 
+            v-if="resultado.tipo == 'Artista'"
+            @click="buscador.activo = false" 
+            :to="`/artista/${resultado.data.slug}`">
+              <img class="img-fluid me-2" :src="resultado.data.banner.data.url"/>
+              <div class="w-100">
+                <span class="small"><strong> {{ resultado.tipo }}</strong></span>
+                <p class="mb-0">{{ resultado.data.nombre }}</p>
+              </div>
+          </RouterLink>
+          <button 
+            v-if="resultado.tipo == 'Cancion'"
+            @click.prevent="seleccionarCancion(resultado.data)">
+              <img class="img-fluid me-2" :src="resultado.data.cover"/>
+              <div class="w-100">
+                <p class="mb-0 mt-0" :title="resultado.data.nombre">{{ resultado.data.nombre }}</p>
+                <span class="tipo-resultado d-block"> {{ resultado.tipo }} </span>
+                <span 
+                  class="resultado__interprete small" 
+                  :title="resultado.data.interprete">
+                    {{ resultado.data.interprete }}
+                </span>
+              </div>
+            </button>
+          <div v-if="resultado.tipo == 'No resultados'">
+            <div>
+              <p class="mb-0 mt-0">{{ resultado.data.mensaje }}</p>
+            </div>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </form>
+  <Overlay v-if="buscador.activo" @click="buscador.activo = false"/>
+</template>
 
 <style lang="scss">
 

@@ -16,25 +16,46 @@
         <!-- LINKS -->
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav ms-auto">
-            <li class="nav-item me-3 order-1 order-lg-0 mt-2 mt-lg-0">
-              <a 
-                class="nav-link" 
-                aria-current="page" 
-                data-bs-toggle="modal" 
-                data-bs-target="#modalLogin"
-                href="#!">
-                Iniciar sesión
-              </a>
-            </li>
-            <li class="nav-item">
-              <a 
-                class="btn btn-primary text-white px-3" 
-                aria-current="page" 
-                data-bs-toggle="modal"
-                data-bs-target="#modalRegistro" 
-                href="#!">
-                Crear una cuenta
-              </a>
+            <template v-if="!user">
+              <li class="nav-item me-3 order-1 order-lg-0 mt-2 mt-lg-0">
+                <a 
+                  class="nav-link" 
+                  aria-current="page" 
+                  data-bs-toggle="modal" 
+                  data-bs-target="#modalLogin"
+                  href="#!">
+                  Iniciar sesión
+                </a>
+              </li>
+              <li class="nav-item">
+                <a 
+                  class="btn btn-primary text-white px-3" 
+                  aria-current="page" 
+                  data-bs-toggle="modal"
+                  data-bs-target="#modalRegistro" 
+                  href="#!">
+                  Crear una cuenta
+                </a>
+              </li>
+            </template>
+            <li class="nav-item" v-else>
+              <div class="dropdown">
+                <button class="btn btn-primary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  Hola {{ user.displayName }}
+                </button>
+                <ul class="dropdown-menu p-2">
+                  <li><a class="dropdown-item mb-1" href="#"><fa class="me-2" icon="user"></fa> Mi perfil</a></li>
+                  <li><a class="dropdown-item" href="#"><fa class="me-2" icon="heart"></fa>Mis favoritos</a></li>
+                  <hr class="my-1">
+                  <li>
+                    <button 
+                      class="dropdown-item" 
+                      @click="handleLogout">
+                        <fa class="me-2" :icon="['fas', 'sign-out-alt']"/> Cerrar sesión
+                    </button>
+                  </li>
+                </ul>
+              </div>
             </li>
             <!-- SWITCH MODO DE COLOR -->
             <li class="nav-item d-flex align-items-center pe-0 px-lg-3 px-0">
@@ -108,6 +129,9 @@
 
 <script setup>
   import { ref, watch, onMounted } from "vue"
+  import { useRouter } from "vue-router"
+  import useLogout from "../composables/useLogout"
+  import getUser from "../composables/getUser"
 
   import BaseLogotipoSitio  from "./BaseLogotipoSitio.vue"
   import BaseBuscador       from "./BaseBuscador.vue"
@@ -117,9 +141,21 @@
 
   import iconoLuna from "../assets/icons/moon.svg"
   import iconoSol from "../assets/icons/sun.svg"
+  
+  const router = useRouter()
+  const {logout, error} = useLogout()
+  const {user} = getUser()
 
   const modoClaro = ref(localStorage.modoCLaro)
   const offCanvasMenu = ref(false)
+
+  async function handleLogout() {
+    await logout()
+    if(!error.value) {
+      user.value = null
+      router.push({name: 'Inicio'})
+    }
+  }
 
   function establecerModoColor() {
     let $body = document.body
@@ -136,6 +172,17 @@
     }
   }
 
+  function toggleOffCanvas() {
+    offCanvasMenu.value = !offCanvasMenu.value
+  }
+
+  onMounted(() => {
+    let $root = document.documentElement
+    $root.style.setProperty('--icon-dark', `url('${iconoLuna}')`)
+    $root.style.setProperty('--icon-light', `url('${iconoSol}')`)
+    establecerModoColor()
+  })
+  
   watch(modoClaro, () => {
     let $body = document.body
     localStorage.setItem("modoClaro", modoClaro.value)
@@ -146,18 +193,6 @@
       $body.removeAttribute("class")
       $body.querySelector('.logotipo-sitio .circulo-marca').classList.toggle('girar')
     }
-  })
-
-  function toggleOffCanvas() {
-    offCanvasMenu.value = !offCanvasMenu.value
-  }
-
-  onMounted(() => {
-    let $root = document.documentElement
-    $root.style.setProperty('--icon-dark', `url('${iconoLuna}')`)
-    $root.style.setProperty('--icon-light', `url('${iconoSol}')`)
-
-    establecerModoColor()
   })
 </script>
 

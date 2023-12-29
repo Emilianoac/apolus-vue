@@ -1,14 +1,14 @@
+<script setup>
+  import Reproductor from './Reproductor.vue'
+  import MenuMovil from './MenuMovil.vue'
+</script>
+
 <template>
   <aside class="barra-control">
     <Reproductor /> 
     <MenuMovil /> 
   </aside>
 </template>
-
-<script setup>
-  import Reproductor from './Reproductor.vue'
-  import MenuMovil from './MenuMovil.vue'
-</script>
 
 <style lang="scss">
 

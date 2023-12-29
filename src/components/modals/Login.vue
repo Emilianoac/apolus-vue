@@ -17,13 +17,18 @@
             <form>
               <div class="mb-3">
                 <label class="form-label">Correo electronico</label>
-                <input type="email" placeholder="Correo electronico" class="form-control">
+                <input class="form-control" v-model="email" type="email" placeholder="Correo electronico">
               </div>
               <div class="mb-3">
                 <label class="form-label">Contraseña</label>
-                <input type="password" placeholder="Contraseña" class="form-control">
+                <input class="form-control" v-model="password" type="password" placeholder="Contraseña">
               </div>
-              <button class="btn btn-primary w-100 mt-4" type="submit" @click.prevent="">Iniciar Sesión</button>
+              <button 
+                class="btn btn-primary w-100 mt-4" 
+                type="submit" 
+                @click.prevent="handleLogin">
+                  Iniciar Sesión
+              </button>
             </form>
             <div class="d-flex align-items-center">
               <hr class="w-100"><span class="d-block mx-2">o</span><hr class="w-100">
@@ -43,7 +48,21 @@
 </template>
 
 <script setup>
+  import { ref } from "vue"
+  import useLogin from "../../composables/useLogin"
+
   import BaseLogotipoSitio from "../BaseLogotipoSitio.vue"
+
+  const { login, error } = useLogin()
+
+  let email = ref('')
+  let password = ref('')
+
+  async function handleLogin() {
+    await login(email.value, password.value)
+    console.log('Done!')
+  }
+
 </script>
 
 <style lang="scss">
