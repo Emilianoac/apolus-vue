@@ -49,6 +49,7 @@
 
   const store = useStore()
   const route = useRoute()
+  
   const artista = reactive({
     data: false,
     error: false

@@ -1,7 +1,14 @@
+<script setup >
+  import Navbar from "../components/Navbar.vue"
+  import BarraControl from "../components/BarraControl.vue"
+  import Debug from "../components/Debug.vue"
+</script>
+
 <template>
   <div class="main-container">
     <Navbar/>
     <main class="main container-fluid">
+      <!-- <Debug/> -->
       <slot />
     </main>
     <!--<TheMenuLateral /> -->    
@@ -9,14 +16,7 @@
   </div>
 </template>
 
-<script setup >
-  import Navbar from '../components/Navbar.vue'
-  import BarraControl from '../components/BarraControl.vue'
-</script>
-
-
 <style lang="scss">
-
 
   .main-container {
     height: 100%;

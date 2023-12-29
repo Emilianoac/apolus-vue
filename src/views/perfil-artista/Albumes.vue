@@ -1,28 +1,3 @@
-<template>
-  <section class="albumes">
-    <swiper
-      class="carrusel"
-      :slides-per-view="4" 
-      navigation
-      :breakpoints="breakpoints"    
-      :space-between="20">
-        <swiper-slide v-for="(album, i) in albumes" :key="album">
-          <figure 
-            class="album" 
-            :class="{'seleccionado' : albumSeleccionado == i }"
-            @click="seleccionarAlbum(album, i)">
-              <div class="img-container">
-                <img class="album__miniatura" :src="album.cover.data.url"/>
-              </div>
-              <figcaption class="album__nombre">
-                {{ album.nombre }} <span class="album__fecha">( {{ album.fecha_lanzamiento }} )</span>
-              </figcaption>
-          </figure>
-        </swiper-slide>
-    </swiper>
-  </section>
-</template>
-
 <script setup>
   import { useStore } from "vuex"
   import { ref, onBeforeUpdate, onMounted} from "vue"
@@ -58,6 +33,31 @@
     albumSeleccionado.value = i
   }
 </script>
+
+<template>
+  <section class="albumes">
+    <swiper
+      class="carrusel"
+      :slides-per-view="4" 
+      navigation
+      :breakpoints="breakpoints"    
+      :space-between="20">
+        <swiper-slide v-for="(album, i) in albumes" :key="album">
+          <figure 
+            class="album" 
+            :class="{'seleccionado' : albumSeleccionado == i }"
+            @click="seleccionarAlbum(album, i)">
+              <div class="img-container">
+                <img class="album__miniatura" :src="album.cover.data.url"/>
+              </div>
+              <figcaption class="album__nombre">
+                {{ album.nombre }} <span class="album__fecha">( {{ album.fecha_lanzamiento }} )</span>
+              </figcaption>
+          </figure>
+        </swiper-slide>
+    </swiper>
+  </section>
+</template>
 
 <style lang="scss">
 
