@@ -1,3 +1,19 @@
+<script setup>
+  import { useStore } from "vuex"
+  import { computed } from "vue"
+
+  import BotonFavorito from "../../components/BaseBotonFavorito.vue"
+  import BotonPlay from "../../components/BaseBotonPlay.vue"
+
+  const props = defineProps({
+    artista: String,
+    seccion: String,
+    titulo: String,
+  })
+  const store = useStore()
+  const album = computed(() => store.state.reproductorPerfilArtista)
+</script>
+
 <template>
   <!-- ALBUM ACTUAL -->
   <div class="reproductor-album">
@@ -19,7 +35,7 @@
         <div class="lista-header__favorito"></div>
       </li>
       <li class="cancion" v-for="(cancion, i) in album.canciones">
-        <div class="cancion__container-cover" @click="seleccionarCancion(cancion)">
+        <div class="cancion__container-cover">
           <!-- BOTON PLAY MOVIL -->
           <fa icon="play" class="icono-play"/> 
           <!-- COVER -->
@@ -29,7 +45,7 @@
         <div class="cancion__posicion">
           {{ i + 1 }} 
           <!-- BOTON PLAY DESKTOP -->
-          <BotonPlay @click="seleccionarCancion(cancion)"/>
+          <BotonPlay :cancion="{album: album.nombre, cover: album.cover.data.url, ... cancion}"/>
         </div>
         <div class="cancion__titulo"> 
           <!-- TITULO  -->
@@ -45,33 +61,6 @@
     </ul>
   </div>
 </template>
-
-<script setup>
-  import { useStore } from "vuex"
-  import { computed } from "vue"
-
-  import BotonFavorito from "../../components/BaseBotonFavorito.vue"
-  import BotonPlay from "../../components/BaseBotonPlay.vue"
-
-  const props = defineProps({
-    artista: String,
-    seccion: String,
-    titulo: String,
-  })
-  const store = useStore()
-  const album = computed(() => store.state.reproductorPerfilArtista)
-
-  function seleccionarCancion(cancion) {
-    let cancionActual = {
-      nombre: cancion.nombre,
-      interprete: cancion.interprete,
-      duracion: cancion.duracion,
-      cover: album.value.cover.data.url
-    }
-    store.commit("SELECCIONAR_CANCION_ACTUAL", cancionActual)
-  }
-
-</script>
 
 <style lang="scss">
 

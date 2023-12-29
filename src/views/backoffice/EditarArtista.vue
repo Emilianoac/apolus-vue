@@ -26,8 +26,16 @@
     <!-- BANNER -->
     <div class="mb-3">
       <label class="form-label">Banner</label>
-      <input class="form-control" type="file" @change="handleBanner($event)">
-      <img class="img-fluid my-3" :src="artista.banner.tempData.url" v-if="artista.banner.tempData">
+      <input 
+        class="form-control" 
+        type="file" 
+        @change="handleBanner($event)"
+      />
+      <img 
+        class="img-fluid my-3" 
+        v-if="artista.banner.tempData"
+        :src="artista.banner.tempData.url" 
+      />
     </div>
     <!--ALBUM-->
     <div class="mb-4" v-for="(album, i) in artista.albumes">
@@ -40,14 +48,26 @@
       <!-- FECHA DE LANZAMIENTO ALBUM -->
       <div class="mb-3">
         <label class="form-label">Fecha de lanzamiento</label>
-        <input class="form-control" type="text" v-model="album.fecha_lanzamiento" >
+        <input 
+          class="form-control" 
+          type="text" 
+          v-model="album.fecha_lanzamiento"
+        />
       </div>
       <!-- COVER ALBUM -->
       <div class="mb-3">
         <label class="form-label"> Caratula </label>
-        <input class="form-control" type="file" @change="handleAlbumCover($event, i)">
+        <input 
+          class="form-control" 
+          type="file" 
+          @change="handleAlbumCover($event, i)"
+        />
       </div>
-      <img class="img-fluid my-3" :src="album.cover.tempData.url" v-if="album.cover.tempData">
+      <img 
+        class="img-fluid my-3" 
+        v-if="album.cover.data"
+        :src="album.cover.data.url" 
+        />
       <!-- CANCIONES -->
       <div class="canciones">
         <h5>Canciones</h5>
@@ -57,13 +77,28 @@
               <span>{{ indexCancion + 1 }}</span>
             </div>
             <div class="col-lg-5 ps-0">
-              <input class="form-control" type="text" placeholder="Nombre" v-model="cancion.nombre">
+              <input 
+                class="form-control" 
+                v-model="cancion.nombre"
+                type="text" 
+                placeholder="Nombre" 
+              />
             </div>
             <div class="col-lg-4 ps-0">
-              <input class="form-control" type="text" placeholder="Interpretes" >
+              <input 
+                class="form-control" 
+                v-model="cancion.interprete"
+                type="text" 
+                placeholder="Interpretes"
+              />
             </div>
             <div class="col-lg-2">
-              <input class="form-control" type="text" placeholder="Duración" v-model="cancion.duracion">
+              <input 
+                class="form-control" 
+                v-model="cancion.duracion"
+                type="text" 
+                placeholder="Duración" 
+              />
             </div>
           </div>
         </div>
@@ -80,38 +115,14 @@
 <script setup>
   import { useRoute} from "vue-router"
   import {reactive, ref, watch} from "vue"
-  import {apolusFirebase} from "../../firebase/config"
-  import {addDoc, collection } from "firebase/firestore"
+  import { db } from "../../firebase/config"
+  import {addDoc, collection, updateDoc, doc } from "firebase/firestore"
   import { getStorage, ref as firebaseRef, uploadBytes, getMetadata, getDownloadURL } from "firebase/storage";
   import {filePreviewFromInput} from "../../composables/filePreview"
 
   const route = useRoute()
+
   const tempArtista = ref(null)
-
-
-  
-  async function obtenerArtista() {
-    try {
-      let res = await apolusFirebase.collection('artistas').doc(route.params.id).get()
-
-      if (!res.empty) {
-        console.log(res.id)
-        const data = res.data()
-
-        tempArtista.value = {
-          ...data, id: res.id
-        }
-
-        console.log(tempArtista.value)
-      } else throw Error('That post does not exist')
-    }
-    catch(err) {
-      console.log(err)
-    }
-  }
-
-  obtenerArtista()
-
   const artista = reactive({
     nombre: null,
     banner: {
@@ -130,21 +141,61 @@
         canciones: [
           {
             nombre: null,
-            duracion: null
+            duracion: null,
+            interprete: null,
           }
         ]
       }
     ]
   })
 
-  watch(tempArtista,(newValue, oldValue) => {
+  async function handleSubmit() {
 
-    if(newValue) {
-      artista.nombre = newValue.nombre
-      artista.biografia = newValue.biografia
-      artista.albumes = newValue.albumes
+    const storage = getStorage()
+    const storageRef = firebaseRef(storage, 'artistas')
+    const projectRef = firebaseRef(storageRef, artista.nombre.replaceAll(' ', '-').toLowerCase())
+
+
+  
+    const coversAlbumes = artista.albumes.map(async (album, index) => {
+
+      if(album.cover.data.file) {
+
+      } else {
+    
+      }
+
+    }) 
+
+    await Promise.all(coversAlbumes).then( async () => {
+
+      const docRef = doc(apolusFirebase,"artistas",tempArtista.value.id)
+    
+      await updateDoc(docRef, { albumes: artista.albumes })
+
+      console.log('Artista actualizado con exito.')
+    })
+  }
+
+  ( async function obtenerArtista() {
+    try {
+      let res = await apolusFirebase.collection('artistas').doc(route.params.id).get()
+
+      if (!res.empty) {
+        console.log(res.id)
+        const data = res.data()
+
+        tempArtista.value = {
+          ...data, id: res.id
+        }
+
+        console.log(tempArtista.value)
+      } else throw Error('That post does not exist')
     }
-  })
+    catch(err) {
+      console.log(err)
+    }
+  })()
 
   function addNewAlbum() {
     artista.albumes.push({
@@ -171,7 +222,7 @@
   }
 
   async function handleAlbumCover(event, i) {
-    artista.albumes[i].cover.tempData = {
+    artista.albumes[i].cover.data = {
       url: await filePreviewFromInput(event),
       file: event.target.files[0]
     }
@@ -185,55 +236,14 @@
     }
   }
 
-  async function handleSubmit() {
-
-    const storage = getStorage()
-    const storageRef = firebaseRef(storage, 'artistas')
-    const projectRef = firebaseRef(storageRef, artista.nombre.replaceAll(' ', '-').toLowerCase())
-
-    const coversAlbumes = artista.albumes.map(async (album, index) => {
-
-      const coverRef = firebaseRef(projectRef, album.cover.tempData.file.name)
-      await uploadBytes(coverRef, album.cover.tempData.file)
-
-      const coverURL = await getDownloadURL(firebaseRef(storage, coverRef))
-      const coverMetadata = await getMetadata(coverRef)
-      
-      album.cover.data = {
-        name: coverMetadata.name,
-        url: coverURL
-      }
-    }) 
-
-    await Promise.all(coversAlbumes).then( async () => {
-
-      const bannerArtista = async () => {
-        const bannerRef = firebaseRef(projectRef,`banner/${artista.banner.tempData.file.name}`)
-        await uploadBytes(bannerRef, artista.banner.tempData.file)
-
-        const bannerURL = await getDownloadURL(firebaseRef(storage, bannerRef))
-        const bannerMetadata = await getMetadata(bannerRef)
-        
-        artista.banner.data = {
-          name: bannerMetadata.name,
-          url:  bannerURL
-        }
-      }
-
-      await bannerArtista()
-      console.log('Imagenes subidas')
-
-      delete artista.banner.tempData
-      artista.albumes.forEach(album => {
-        delete album.cover.tempData
-      })
-      artista.slug = artista.nombre.replaceAll(' ', '-').toLowerCase()
-
-      await addDoc(collection(apolusFirebase, 'artistas'), artista)
-      console.log('Artista agregado con exito.')
-    })
-  }
-
+  watch(tempArtista,(newValue, oldValue) => {
+    if(newValue) {
+      artista.nombre = newValue.nombre
+      artista.banner.tempData = newValue.banner.data
+      artista.biografia = newValue.biografia
+      artista.albumes = newValue.albumes
+    }
+  })
 </script>
 
 <style lang="scss">
